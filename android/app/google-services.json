@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "490046650827",
+    "project_id": "tarix-162f2",
+    "storage_bucket": "tarix-162f2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:490046650827:android:52d3c2ff4c66b92c919e4e",
+        "android_client_info": {
+          "package_name": "torex.tarix.uz"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2S5HX0xzHpnouWrUsR9JWKpm36cbSDgQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
