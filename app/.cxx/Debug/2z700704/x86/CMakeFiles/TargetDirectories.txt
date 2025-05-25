@@ -1,0 +1,2 @@
+/Users/to-rex/StudioProjects/tarix/android/app/.cxx/Debug/2z700704/x86/CMakeFiles/edit_cache.dir
+/Users/to-rex/StudioProjects/tarix/android/app/.cxx/Debug/2z700704/x86/CMakeFiles/rebuild_cache.dir
