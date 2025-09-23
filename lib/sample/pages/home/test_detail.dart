@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../companents/filds/text_small.dart';
 import '../../../companents/home/radio_option.dart';
-import '../../../controller/get_controller.dart';
+import '../../../controllers/get_controller.dart';
 import '../../../resource/app_colors.dart';
 
 class TestDetail extends StatelessWidget {

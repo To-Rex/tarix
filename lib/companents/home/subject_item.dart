@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:tarix/sample/pages/home/classes_page.dart';
-import 'package:tarix/sample/pages/home/tests_page.dart';
-import '../../controller/get_controller.dart';
+import '../../controllers/get_controller.dart';
 import '../../resource/app_colors.dart';
+import '../../sample/pages/home/classes_page.dart';
 import '../../sample/pages/home/presentation_page.dart';
+import '../../sample/pages/home/tests_page.dart';
 import '../filds/text_small.dart';
 
 class SubjectItem extends StatelessWidget {

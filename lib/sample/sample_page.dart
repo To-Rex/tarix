@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controller/get_controller.dart';
+import '../controllers/get_controller.dart';
 import '../resource/app_colors.dart';
 
 class SamplePage extends StatelessWidget {

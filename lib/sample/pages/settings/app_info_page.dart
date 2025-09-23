@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import '../../../controller/get_controller.dart';
-import '../../../controller/api_controller.dart';
+import '../../../controllers/api_controller.dart';
+import '../../../controllers/get_controller.dart';
 
 class AppInfoPage extends StatelessWidget {
   const AppInfoPage({super.key});

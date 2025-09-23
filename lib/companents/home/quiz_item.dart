@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import '../../controller/get_controller.dart';
+import '../../controllers/get_controller.dart';
 import '../../resource/app_colors.dart';
 import '../../sample/pages/home/questions_page.dart';
 import '../filds/text_small.dart';
@@ -29,7 +29,7 @@ class QuizItem extends StatelessWidget {
             children: [
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 15.w),
-                child: TextSmall(text: '${index+1}-savol:', color: AppColors.grey3, fontSize: 18.sp, fontWeight: FontWeight.w500, maxLines: 300),
+                child: TextSmall(text: '${index+1}-${'Savol'.tr}:', color: AppColors.grey3, fontSize: 18.sp, fontWeight: FontWeight.w500, maxLines: 300),
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 15.w),
@@ -38,7 +38,7 @@ class QuizItem extends StatelessWidget {
               const Divider(color: AppColors.grey6, thickness: 1),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 15.w),
-                child: TextSmall(text: 'Javob:', color: AppColors.grey3, fontSize: 18.sp, fontWeight: FontWeight.w500, maxLines: 300),
+                child: TextSmall(text: '${'Javob'.tr}:', color: AppColors.grey3, fontSize: 18.sp, fontWeight: FontWeight.w500, maxLines: 300),
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 15.w),

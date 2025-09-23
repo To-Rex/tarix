@@ -55,7 +55,9 @@ class LocaleString extends Translations{
       'Dasturdan chiqasizmi?':'Dasturdan chiqasizmi?',
       'Dasturdan chiqqaningdan so‘ng qayta kirishingiz mumkin!':'Dasturdan chiqqaningdan so‘ng qayta kirishingiz mumkin!',
       'Chiqish':'Chiqish',
-      'Bildirishnomalar':'Bildirishnomalar'
+      'Bildirishnomalar':'Bildirishnomalar',
+      'Javob': 'Javob',
+      'Savol': 'Savol',
     },
     'ru_RU': {
       'name':'Дилшоджон',
@@ -109,7 +111,9 @@ class LocaleString extends Translations{
       'Dasturdan chiqasizmi?':'Выйти из приложения?',
       'Dasturdan chiqqaningdan so‘ng qayta kirishingiz mumkin!':'Выйти из приложения, чтобы заново войти!',
       'Chiqish':'Выйти',
-      'Bildirishnomalar':'Уведомления'
+      'Bildirishnomalar':'Уведомления',
+      'Javob': 'Ответ',
+      'Savol': 'Вопрос',
     }
   };
 }

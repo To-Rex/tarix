@@ -1,12 +1,9 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:get/get.dart';
-
-import '../../controller/api_controller.dart';
-import '../../controller/get_controller.dart';
+import '../../controllers/api_controller.dart';
+import '../../controllers/get_controller.dart';
 import '../../resource/app_colors.dart';
 import '../../sample/auth/login_page.dart';
 import '../fields/text_large.dart';

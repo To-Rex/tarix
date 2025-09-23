@@ -4,7 +4,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart'; // SystemChrome uchun
 import 'package:easy_docs_viewer/easy_docs_viewer.dart';
-import 'package:tarix/controller/api_controller.dart'; // PPTX ko'rish uchun
+
+import '../../../controllers/api_controller.dart';
 
 class PptxReader extends StatelessWidget {
   final String url;

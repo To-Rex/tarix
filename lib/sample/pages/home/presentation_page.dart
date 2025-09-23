@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import 'package:tarix/controller/api_controller.dart';
-import 'package:tarix/controller/get_controller.dart';
 import '../../../companents/filds/text_small.dart';
 import '../../../companents/home/presentation_item.dart';
 import '../../../companents/refresh_component.dart';
+import '../../../controllers/api_controller.dart';
+import '../../../controllers/get_controller.dart';
 import '../../../resource/app_colors.dart';
 
 class PresentationPage extends StatelessWidget {

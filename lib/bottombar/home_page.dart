@@ -4,13 +4,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import 'package:tarix/controller/api_controller.dart';
-import 'package:tarix/resource/app_colors.dart';
-import 'package:tarix/sample/pages/home/notification_page.dart';
 import '../companents/filds/text_small.dart';
 import '../companents/home/home_item.dart';
 import '../companents/refresh_component.dart';
-import '../controller/get_controller.dart';
+import '../controllers/api_controller.dart';
+import '../controllers/get_controller.dart';
+import '../resource/app_colors.dart';
+import '../sample/pages/home/notification_page.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});

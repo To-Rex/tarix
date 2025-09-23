@@ -6,11 +6,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
-import 'package:tarix/controller/api_controller.dart';
-import 'package:tarix/resource/app_colors.dart';
-import 'package:tarix/sample/pages/error_page.dart';
 import '../../companents/filds/text_small.dart';
-import '../../controller/get_controller.dart';
+import '../../controllers/api_controller.dart';
+import '../../controllers/get_controller.dart';
+import '../../resource/app_colors.dart';
+import '../pages/error_page.dart';
+
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
@@ -92,16 +93,16 @@ class LoginPage extends StatelessWidget {
                       if (Platform.isAndroid)
                       GoogleAuthButton(
                         onPressed: () {
-                          print('Google orqali kirish=====================================================');
-                          //googleSignIn();
                           signInWithGoogle();
                         },
                         text: 'Google orqali kirish'.tr,
+
                         style: AuthButtonStyle(
                           width: Get.width,
                           elevation: 0,
                           buttonColor: AppColors.white,
                           borderColor: AppColors.grey,
+                          textStyle: TextStyle(fontFamily: 'Schyler', color: AppColors.black, fontSize: 16.sp, fontWeight: FontWeight.bold),
                           shadowColor: Colors.transparent,
                           splashColor: AppColors.grey.withAlpha(50),
                           padding: EdgeInsets.symmetric(vertical: 8.h),
@@ -123,9 +124,7 @@ class LoginPage extends StatelessWidget {
                               borderRadius: 12.r
                           ),
                           onPressed: () {
-                            //googleSignIn();
                             signInWithGoogle();
-                            //performAppleSignIn(context);
                           },
                         )
                     ]

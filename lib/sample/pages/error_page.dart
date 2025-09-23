@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:tarix/companents/filds/text_small.dart';
-import 'package:tarix/sample/splash_screen.dart';
-
+import '../../companents/filds/text_small.dart';
 import '../../resource/app_colors.dart';
+import '../../screens/splash_screen.dart';
 
 class ErrorPage extends StatelessWidget {
   const ErrorPage({super.key});

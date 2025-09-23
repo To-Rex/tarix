@@ -5,11 +5,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:tarix/resource/string.dart';
-import 'package:tarix/sample/splash_screen.dart';
-import 'controller/dependency.dart';
-import 'controller/get_controller.dart';
+import 'package:history/resource/string.dart';
+import 'package:history/sample/splash_screen.dart';
+import 'controllers/dependency.dart';
+import 'controllers/get_controller.dart';
 import 'firebase_options.dart';
+
 
 main() async {
   WidgetsFlutterBinding.ensureInitialized();

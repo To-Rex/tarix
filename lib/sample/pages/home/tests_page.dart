@@ -2,9 +2,9 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:tarix/controller/get_controller.dart';
-import 'package:tarix/sample/pages/home/test_detail.dart';
+import 'package:history/sample/pages/home/test_detail.dart';
 import '../../../companents/filds/text_small.dart';
+import '../../../controllers/get_controller.dart';
 import '../../../resource/app_colors.dart';
 
 class TestsPage extends StatelessWidget {
@@ -25,7 +25,7 @@ class TestsPage extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Container(
+          /*Container(
             margin: EdgeInsets.only(top: 20.h, left: 15.w, right: 15.w),
             padding: EdgeInsets.all(15.r),
             decoration: BoxDecoration(
@@ -41,7 +41,7 @@ class TestsPage extends StatelessWidget {
                 const Icon(FluentIcons.checkmark_square_20_filled, color: AppColors.white)
               ],
             )
-          ),
+          ),*/
           Container(
             width: 1.sw,
             margin: EdgeInsets.only(top: 16.h, left: 15.w, right: 15.w),

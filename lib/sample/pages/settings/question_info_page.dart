@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:tarix/companents/filds/text_small.dart';
-import '../../../controller/get_controller.dart';
+import '../../../companents/filds/text_small.dart';
+import '../../../controllers/get_controller.dart';
 import '../../../resource/app_colors.dart';
 
 class QuestionInfoPage extends StatelessWidget {

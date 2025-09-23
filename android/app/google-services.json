@@ -7,12 +7,33 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:490046650827:android:52d3c2ff4c66b92c919e4e",
+        "mobilesdk_app_id": "1:490046650827:android:122638a7f6daa77a919e4e",
         "android_client_info": {
-          "package_name": "torex.tarix.uz"
+          "package_name": "history.uz.history"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "490046650827-m5ql4p4ojrpdq30evo8e75nkjd8kr7eg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "history.uz.history",
+            "certificate_hash": "cea3be1a06d63e3a4b38ae92be7cd3b4e2b07945"
+          }
+        },
+        {
+          "client_id": "490046650827-uftqcbrt47ut350gnukb08vmov10hjdd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "history.uz.history",
+            "certificate_hash": "94278066fdfd7bfa5dfec2d025472b84ae597a53"
+          }
+        },
+        {
+          "client_id": "490046650827-so49frp645cr99vhogmu15vselnebfst.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyC2S5HX0xzHpnouWrUsR9JWKpm36cbSDgQ"
@@ -20,7 +41,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "490046650827-so49frp645cr99vhogmu15vselnebfst.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "490046650827-3cegtj2phmkfnbb6m5rrls6qs417ius6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "tarix.uzbekistan.tarix"
+              }
+            }
+          ]
         }
       }
     }

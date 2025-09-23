@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tarix/resource/app_colors.dart';
-
+import '../resource/app_colors.dart';
 import 'filds/text_small.dart';
 
 class CustomRefreshHeader extends StatelessWidget {

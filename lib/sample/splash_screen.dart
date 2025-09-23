@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tarix/sample/auth/login_page.dart';
-
-import '../controller/api_controller.dart';
-import '../controller/get_controller.dart';
+import '../controllers/api_controller.dart';
+import '../controllers/get_controller.dart';
+import 'auth/login_page.dart';
 
 class SplashScreen extends StatelessWidget {
   SplashScreen({super.key});

@@ -2,14 +2,14 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:tarix/companents/filds/text_small.dart';
-import 'package:tarix/companents/settings/instrument_components.dart';
-import 'package:tarix/resource/app_colors.dart';
-import 'package:tarix/sample/pages/settings/app_info_page.dart';
-import 'package:tarix/sample/pages/settings/payment_history_page.dart';
-import 'package:tarix/sample/pages/settings/question_info_page.dart';
+import '../companents/filds/text_small.dart';
 import '../companents/settings/acc_item.dart';
-import '../controller/get_controller.dart';
+import '../companents/settings/instrument_components.dart';
+import '../controllers/get_controller.dart';
+import '../resource/app_colors.dart';
+import '../sample/pages/settings/app_info_page.dart';
+import '../sample/pages/settings/payment_history_page.dart';
+import '../sample/pages/settings/question_info_page.dart';
 
 class SettingsPage extends StatelessWidget {
   SettingsPage({super.key});
@@ -38,7 +38,11 @@ class SettingsPage extends StatelessWidget {
                           width: 125.w,
                           height: 125.h,
                           margin: EdgeInsets.only(bottom: 10.h),
-                          decoration: BoxDecoration(shape: BoxShape.circle, image: DecorationImage(image: NetworkImage(_getController.meModel.value.data?.photo ?? 'https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png')))
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: NetworkImage(_getController.meModel.value.data?.photo ?? 'https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png')))
                       )
                     else
                       Container(

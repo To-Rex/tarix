@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:tarix/companents/settings/instrument_components.dart';
-import '../../controller/get_controller.dart';
+import '../../controllers/get_controller.dart';
 import '../../resource/app_colors.dart';
 import '../../sample/pages/other/pptx_reader.dart';
 import '../filds/text_small.dart';
+import '../settings/instrument_components.dart';
 
 class PresentationItem extends StatelessWidget {
   final String title;
