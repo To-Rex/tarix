@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../companents/fields/search_item.dart';
 import '../../../companents/filds/text_small.dart';
 import '../../../companents/home/quiz_item.dart';
@@ -88,7 +91,7 @@ class QuestionsPage extends StatelessWidget {
                             const Divider(color: AppColors.white, thickness: 1),
                             SizedBox(height: 5.h),
                             TextSmall(
-                                text: '${'To‘lov miqdori'.tr}: 70 000 ${'so‘m'.tr}',
+                                text: '${'To‘lov miqdori'.tr}: ${_getController.meModel.value.data?.appPrice ?? 0} ${'so‘m'.tr}',
                                 color: AppColors.white,
                                 fontSize: 20.sp,
                                 fontWeight: FontWeight.w500,
@@ -101,7 +104,32 @@ class QuestionsPage extends StatelessWidget {
                                 elevation: 0,
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
                               ),
-                              onPressed: () {print('clicked button to pay');},
+                              onPressed: () async {
+                                print('clicked button to pay');
+                                final String merchantId = "68aebc7dd0369401e31bb756";
+                                //final String email = "kuchkarov.aziz.08@gmail.com";
+                                final String email = _getController.meModel.value.data?.doc?.email ?? "";
+                                final int amount = 5000000; // so‘mda
+
+                                // Payme uchun string format
+                                final String raw = "m=$merchantId;ac.email=$email;a=$amount";
+
+                                // base64 ga o‘tkazish
+                                final String encoded = base64Encode(utf8.encode(raw));
+
+                                // Yakuniy URL
+                                final Uri url = Uri.parse("https://checkout.paycom.uz/$encoded");
+
+                                if (await canLaunchUrl(url)) {
+                                  await launchUrl(
+                                    url,
+                                    mode: LaunchMode.externalApplication,
+                                  );
+                                } else {
+                                  print("❌ URL ni ochib bo‘lmadi");
+                                }
+
+                                },
                               child: TextSmall(text: 'To‘lov qilish', color: AppColors.white, fontSize: 18.sp, fontWeight: FontWeight.w500),
                             )
                           ]

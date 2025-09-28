@@ -33,7 +33,7 @@ class SettingsPage extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    if (_getController.meModel.value.data?.photo != null && _getController.meModel.value.data?.photo != '' && _getController.meModel.value.data?.photo != 'null')
+                    if (_getController.meModel.value.data?.doc?.photo != null && _getController.meModel.value.data?.doc?.photo != '' && _getController.meModel.value.data?.doc?.photo != 'null')
                       Container(
                           width: 125.w,
                           height: 125.h,
@@ -42,7 +42,7 @@ class SettingsPage extends StatelessWidget {
                               shape: BoxShape.circle,
                               image: DecorationImage(
                                   fit: BoxFit.cover,
-                                  image: NetworkImage(_getController.meModel.value.data?.photo ?? 'https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png')))
+                                  image: NetworkImage(_getController.meModel.value.data?.doc?.photo ?? 'https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png')))
                       )
                     else
                       Container(
@@ -50,10 +50,18 @@ class SettingsPage extends StatelessWidget {
                           height: 125.h,
                           margin: EdgeInsets.only(bottom: 10.h),
                           decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.grey6),
-                          child: Center(child: TextSmall(text: _getController.meModel.value.data!.fullName.toString().substring(0, 1).toUpperCase(), color: AppColors.black, fontSize: 50.sp, fontWeight: FontWeight.bold))
+                          child: Center(child: TextSmall(
+                              //text: _getController.meModel.value.data!.fullName.toString().substring(0, 1).toUpperCase(),
+                              text: (_getController.meModel.value.data?.doc?.fullName?.isNotEmpty ?? false) ? _getController.meModel.value.data!.doc!.fullName![0].toUpperCase() : "?",
+                              color: AppColors.black, fontSize: 50.sp, fontWeight: FontWeight.bold))
                       ),
-                    TextSmall(text: _getController.meModel.value.data!.fullName.toString(), color: AppColors.black, fontSize: 24.sp, fontWeight: FontWeight.bold),
-                    TextSmall(text: _getController.meModel.value.data?.email ?? '', color: AppColors.grey3, fontSize: 18.sp),
+                    TextSmall(
+                        //text: _getController.meModel.value.data!.fullName.toString(),
+                        text: (_getController.meModel.value.data?.doc?.fullName?.isNotEmpty ?? false)
+                            ? _getController.meModel.value.data!.doc!.fullName!
+                            : 'unknown',
+                        color: AppColors.black, fontSize: 24.sp, fontWeight: FontWeight.bold),
+                    TextSmall(text: _getController.meModel.value.data?.doc?.email ?? '', color: AppColors.grey3, fontSize: 18.sp),
                   ]
                 )
             )),
@@ -62,7 +70,7 @@ class SettingsPage extends StatelessWidget {
             SizedBox(height: 10.h),
             AccItem(title: 'Dastur haqida', icon: FluentIcons.info_24_regular, subTitle: '', onTaps: () => Get.to(() => AppInfoPage())),
             AccItem(title: 'Test natijalari', icon: FluentIcons.document_bullet_list_24_regular, subTitle: '', onTaps: () => Get.to(() => QuestionInfoPage())),
-            AccItem(title: 'To’lovlar tarixi', icon: FluentIcons.credit_card_clock_24_regular, subTitle: '', onTaps: () => Get.to(() => PaymentHistoryPage())),
+            //AccItem(title: 'To’lovlar tarixi', icon: FluentIcons.credit_card_clock_24_regular, subTitle: '', onTaps: () => Get.to(() => PaymentHistoryPage())),
             AccItem(title: 'Tilni o‘zgartirish', icon: FluentIcons.globe_24_regular, subTitle: 'uz_UZ' == _getController.getLocale() ? 'O‘zbekcha' : 'oz_OZ' == _getController.getLocale() ? 'Ўзбекча' : 'Русский', onTaps: () => InstrumentComponents().languageDialog(context)),
             AccItem(title: 'Ilovadan chiqish', icon: FluentIcons.arrow_exit_20_filled, color: AppColors.red, subTitle: '', onTaps: () => InstrumentComponents().logOutDialog(context)),
           ]

@@ -10,6 +10,8 @@ class SplashScreen extends StatelessWidget {
   final GetController _getController = Get.put(GetController());
 
   Future<void> open() async {
+    _getController.saveToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6InRvcmV4LmFtYWtpQGljbG91ZC5jb20iLCJmdWxsX25hbWUiOiJEaWxzaG9kam9uIEhheWRhcm92IiwiYXBwbGVfaWQiOiIwMDA0ODEuMTBhZjM1MDg5NzE0NDc3OTk1ZTYyOTY1MDcyYmZhYmYuMjEyOSIsImdvb2dsZV9pZCI6bnVsbCwiaWQiOiI2OGQ4MDM5ZGIwZjY2NGI2YWVjYWU3YzYiLCJyb2xlIjoibW9iaWxlLXVzZXIiLCJpYXQiOjE3NTkwNDE2ODgsImV4cCI6MTc1OTY0NjQ4OH0.nB_-9T0FdlIluhKqqKfXqOLwkbJ0KtJ9q2M_OwtZvrw');
+
     if (_getController.token != null && _getController.token!.isNotEmpty) {
       ApiController().getMe();
     } else {

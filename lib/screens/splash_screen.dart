@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../sample/auth/login_page.dart';
 import 'onboarding_screen.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -8,7 +9,8 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future.delayed(const Duration(seconds: 2), () {
-      Get.off(() => const OnboardingScreen());
+      //Get.off(() => const OnboardingScreen());
+      Get.off(() => LoginPage());
     });
 
     return Scaffold(

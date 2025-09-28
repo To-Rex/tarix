@@ -33,6 +33,28 @@ class LoginPage extends StatelessWidget {
     }
   }
 
+  Future<void> signInWithApple() async {
+    try {
+      final credential = await SignInWithApple.getAppleIDCredential(scopes: [AppleIDAuthorizationScopes.email, AppleIDAuthorizationScopes.fullName]);
+      // Apple'dan kelgan ma'lumotlarni logda ko'rish
+      print("Apple Email: ${credential.email}");
+      print("Apple Full Name: ${credential.givenName} ${credential.familyName}");
+      print("Apple Locale: ${credential.state}");
+      print("Apple Identity Token: ${credential.identityToken}");
+      print("Apple User ID: ${credential.userIdentifier}");
+      print("Apple Authorization Code: ${credential.authorizationCode}");
+
+      //var fullName = '${credential.givenName ?? ''} ${credential.familyName ?? ''}';
+      var fullName = '${credential.givenName ?? ''}${credential.givenName != null ? ' ' : ''}${credential.familyName ?? ''}';
+      var email = credential.email ?? '';
+      var appleId = credential.userIdentifier ?? '';
+      var appleIdentityToken = credential.identityToken ?? '';
+      await ApiController().loginApple(email, fullName, '', appleId, appleIdentityToken);
+    } catch (e) {
+      print("Apple Sign-In error: $e");
+    }
+  }
+
   Future<UserCredential?> signInWithGoogle() async {
     try {
       final GoogleSignIn googleSignIn = GoogleSignIn(scopes: ['email']);
@@ -114,6 +136,9 @@ class LoginPage extends StatelessWidget {
                         AppleAuthButton(
                           style: AuthButtonStyle(
                               width: Get.width,
+                              iconColor: AppColors.black,
+                              iconSize: 24.w,
+                              textStyle: TextStyle(fontFamily: 'Schyler', color: AppColors.black, fontSize: 16.sp, fontWeight: FontWeight.bold),
                               elevation: 0,
                               borderColor: AppColors.grey,
                               buttonColor: AppColors.white,
@@ -124,7 +149,7 @@ class LoginPage extends StatelessWidget {
                               borderRadius: 12.r
                           ),
                           onPressed: () {
-                            signInWithGoogle();
+                            signInWithApple();
                           },
                         )
                     ]

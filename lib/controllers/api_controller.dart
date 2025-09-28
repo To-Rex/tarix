@@ -109,7 +109,38 @@ class ApiController extends GetxController {
     }
   }
 
+  Future<void> loginApple(String email, String fullName, String photo, String appleId, String appleIdentityToken) async {
+    print('=====================================================suuuu');
+    print(email);
+    print(fullName);
+    print(photo);
+    print(appleId);
+    try {
+      final response = await http.post(Uri.parse('$baseUrl/mobile/auth/login'), headers: header(), body: {
+        'email': email,
+        'full_name': fullName,
+        'photo': photo,
+        'apple_id': appleId,
+        'apple_identity_token': appleIdentityToken
+      });
+      debugPrint(response.body);
+      debugPrint(response.statusCode.toString());
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final data = jsonDecode(response.body);
+        debugPrint(data.toString());
+        _getController.saveToken(data['data']['token']);
+        getMe();
+      } else {
+        print('=====================================================Xa otam nima bo`lyapti');
+        Get.snackbar('Xatolik', 'Email yoki parol xato', snackPosition: SnackPosition.BOTTOM);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   Future<void> getMe() async {
+
     try {
       final response = await http.get(Uri.parse('$baseUrl/mobile/auth/me'), headers: headersBearer());
       debugPrint(response.body);
