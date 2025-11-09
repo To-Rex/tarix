@@ -60,7 +60,8 @@ class PresentationPage extends StatelessWidget {
                       file: _getController.presentationModel.value.data![index].file.toString(),
                       mimetype: _getController.presentationModel.value.data![index].mimetype.toString(),
                       price: _getController.presentationModel.value.data![index].price.toString(),
-                      isFree: _getController.presentationModel.value.data![index].isFree.toString() == 'true' ? true : false
+                      //isFree: _getController.presentationModel.value.data![index].isFree.toString() == 'true' ? true : false
+                      isFree: _getController.meModel.value.data?.doc?.paid == true ? true : _getController.presentationModel.value.data![index].isFree.toString() == 'true' ? true : false
                   )
               );
             })

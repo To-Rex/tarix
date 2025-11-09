@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../controllers/api_controller.dart';
 import '../../controllers/get_controller.dart';
 import '../../resource/app_colors.dart';
@@ -12,10 +15,10 @@ import '../filds/text_small.dart';
 class InstrumentComponents {
   final GetController _getController = Get.put(GetController());
 
-  updateLanguage(Locale locale){Get.updateLocale(locale);_getController.saveLanguage(locale);}
+  void updateLanguage(Locale locale){Get.updateLocale(locale);_getController.saveLanguage(locale);}
 
 
-  bottomSheetAccountsDelete(BuildContext context) => Get.bottomSheet(
+  void bottomSheetAccountsDelete(BuildContext context) => Get.bottomSheet(
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.horizontal(right: Radius.circular(10.0),left: Radius.circular(10.0))),
       enableDrag: false,
       isScrollControlled: false,
@@ -51,9 +54,9 @@ class InstrumentComponents {
                           child: Obx(() => _getController.countdownDuration.value.inSeconds == 0
                               ? ElevatedButton(
                               onPressed: () async {
-                                //ApiController().deleteProfile();
+                                ApiController().deleteProfile();
                               },
-                              style: ElevatedButton.styleFrom(backgroundColor: AppColors.secondaryColor, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
+                              style: ElevatedButton.styleFrom(backgroundColor: AppColors.red, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
                               child:const Center(child: TextSmall(text: 'O‘chirishni tasdiqlang', color: AppColors.white, fontWeight: FontWeight.w400))
                           )
                               : ElevatedButton(
@@ -250,7 +253,7 @@ class InstrumentComponents {
                             ),
                             SizedBox(width: 10.w),
                             TextSmall(
-                              text: '70 000 ${'so‘m'.tr}',
+                              text: '${_getController.getMoneyFormat(_getController.meModel.value.data!.appPrice.toString())} ${'so‘m'.tr}',
                               color: AppColors.primaryColor,
                               fontSize: 20.sp,
                               fontWeight: FontWeight.bold,
@@ -268,9 +271,32 @@ class InstrumentComponents {
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r))
                           ),
                           child: TextSmall(text: 'To‘lash'.tr, color: AppColors.white, fontWeight: FontWeight.bold, fontSize: 18.sp),
-                          onPressed: () {
+                          onPressed: () async {
+
                             Get.back();
-                            //Get.to(() => PaymentPage());
+                            print('clicked button to pay');
+                            final String merchantId = "68aebc7dd0369401e31bb756";
+                            //final String email = "kuchkarov.aziz.08@gmail.com";
+                            final String email = _getController.meModel.value.data?.doc?.email ?? "";
+                            //final int amount = 5000000; // so‘mda
+                            final int amount = _getController.meModel.value.data!.appPrice! * 100;
+
+                            // Payme uchun string format
+                            final String raw = "m=$merchantId;ac.email=$email;a=$amount";
+                            print(raw);
+
+                            // base64 ga o‘tkazish
+                            final String encoded = base64Encode(utf8.encode(raw));
+
+                            // Yakuniy URL
+                            final Uri url = Uri.parse("https://checkout.paycom.uz/$encoded");
+                            print(url.toString());
+
+                            if (await canLaunchUrl(url)) {
+                            await launchUrl(url, mode: LaunchMode.externalApplication);
+                            } else {
+                            print("❌ URL ni ochib bo‘lmadi");
+                            }
                           },
                         ),
                         SizedBox(height: Get.height * 0.06),

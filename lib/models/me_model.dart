@@ -106,6 +106,7 @@ class Doc {
   String? fullName;
   String? photo;
   String? appleId;
+  bool? paid;
   String? googleId;
 
   Doc({this.id, this.email, this.fullName, this.photo, this.appleId, this.googleId});
@@ -116,6 +117,7 @@ class Doc {
     fullName = json['full_name'];
     photo = json['photo'];
     appleId = json['apple_id'];
+    paid = json['paid'];
     googleId = json['google_id'];
   }
 
@@ -126,6 +128,7 @@ class Doc {
     result['full_name'] = fullName;
     result['photo'] = photo;
     result['apple_id'] = appleId;
+    result['paid'] = paid;
     result['google_id'] = googleId;
     return result;
   }

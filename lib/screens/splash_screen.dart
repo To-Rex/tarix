@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import '../sample/auth/login_page.dart';
 import 'onboarding_screen.dart';
 
-class SplashScreen extends StatelessWidget {
-  const SplashScreen({super.key});
+class SplashScreens extends StatelessWidget {
+  const SplashScreens({super.key});
 
   @override
   Widget build(BuildContext context) {

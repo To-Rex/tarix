@@ -11,6 +11,7 @@ import '../companents/settings/instrument_components.dart';
 import '../models/app_info_model.dart';
 import '../models/grade_model.dart';
 import '../models/me_model.dart';
+import '../models/payment_history.dart';
 import '../models/presentation_model.dart';
 import '../models/question_model.dart';
 import '../models/quiz_model.dart';
@@ -42,6 +43,7 @@ class GetController extends GetxController {
   final RefreshController refreshClassesController = RefreshController(initialRefresh: false);
   final RefreshController refreshPresentationController = RefreshController(initialRefresh: false);
   final RefreshController refreshQuestionsController = RefreshController(initialRefresh: false);
+  final RefreshController refreshPaymentHistoryController = RefreshController(initialRefresh: false);
 
   final ScrollController  scrollController = ScrollController();
   final ScrollController  scrollDetailController = ScrollController();
@@ -49,6 +51,7 @@ class GetController extends GetxController {
   final ScrollController  scrollClassesController = ScrollController();
   final ScrollController  scrollPresentationController = ScrollController();
   final ScrollController  scrollQuestionsController = ScrollController();
+  final ScrollController  scrollPaymentHistoryController = ScrollController();
 
   //text editing controllers
   final TextEditingController searchQuizController = TextEditingController();
@@ -61,6 +64,7 @@ class GetController extends GetxController {
   var presentationModel = PresentationModel().obs;
   var quizModel = QuizModel().obs;
   var appInfoModel = AppInfoModel().obs;
+  var paymentHistory = PaymentHistory().obs;
 
   //change Models
   void changeMeModel(MeModel model) => meModel.value = model;
@@ -70,6 +74,8 @@ class GetController extends GetxController {
   void changePresentationModel(PresentationModel model) => presentationModel.value = model;
   void changeQuizModel(QuizModel model) => quizModel.value = model;
   void changeAppInfoModel(AppInfoModel model) => appInfoModel.value = model;
+  void changePaymentModel(PaymentHistory model) => paymentHistory.value = model;
+
 
   //clear Models
   void clearMeModel() => meModel.value = MeModel();
@@ -149,11 +155,12 @@ class GetController extends GetxController {
     super.onClose();
   }
 
+  GetStorage box = GetStorage();
 
   String get headerLanguage => language.languageCode == 'uz_UZ' ? 'uz' : language.languageCode == 'oz_OZ' ? 'oz' : language.languageCode == 'ru_RU' ? 'ru' : 'en';
-  get token => GetStorage().read('token');
-  void saveToken(String token) => GetStorage().write('token', token);
-  void saveFcmToken(String token) => GetStorage().write('fcmToken', token);
+  get token => box.read('token');
+  void saveToken(String token) => box.write('token', token);
+  void saveFcmToken(String token) => box.write('fcmToken', token);
 
   String getMoneyFormat(value) => value == null ? '0' : value.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]} ');
 
@@ -167,7 +174,7 @@ class GetController extends GetxController {
 
   void stopTimerTap() => _timerTap!.cancel();
 
-  Locale get language => Locale(GetStorage().read('language') ?? 'uz_UZ');
+  Locale get language => Locale(box.read('language') ?? 'uz_UZ');
   //final List locale = [{'name':'O‘zbekcha','locale': const Locale('uz','UZ'), 'icon':'assets/images/flag_uz.png'}, {'name':'Русский','locale': const Locale('ru','RU'),'icon':'assets/images/flag_ru.png'}, {'name':'English','locale': const Locale('en','US'), 'icon':'assets/images/flag_en.png'}].obs;
   final List locale = [{'name':'O‘zbekcha','locale': const Locale('uz','UZ'), 'icon':'assets/images/flag_uz.png'}, {'name':'Русский','locale': const Locale('ru','RU'),'icon':'assets/images/flag_ru.png'}].obs;
 
@@ -186,7 +193,7 @@ class GetController extends GetxController {
 
   void saveLanguage(Locale locale) {
     debugPrint(locale.languageCode.toString());
-    GetStorage().write('language', '${locale.languageCode}_${locale.countryCode}');
+    box.write('language', '${locale.languageCode}_${locale.countryCode}');
     Get.updateLocale(locale);
   }
 
@@ -197,15 +204,26 @@ class GetController extends GetxController {
     widgetOptions.add(SettingsPage());
   }
 
+  void startDeleteCountdown() {
+    countdownDuration.value = const Duration(seconds: 5); // 5 soniyadan boshlanadi
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (countdownDuration.value.inSeconds == 0) {
+        timer.cancel();
+      } else {
+        countdownDuration.value = Duration(seconds: countdownDuration.value.inSeconds - 1);
+      }
+    });
+  }
+
   Future<void> signOut() async {
     try {
+
+      box.remove('token');
+      box.remove('fcmToken');
       // Google Sign-In dan chiqish
       await GoogleSignIn().signOut();
       // Firebase Auth dan chiqish
       await FirebaseAuth.instance.signOut();
-      //clear token
-      GetStorage().remove('token');
-      GetStorage().remove('fcmToken');
       Get.offAll(() => LoginPage(), transition: Transition.fadeIn);
       print('Foydalanuvchi hisobdan chiqdi');
     } catch (e) {

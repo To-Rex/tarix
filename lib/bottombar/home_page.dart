@@ -105,76 +105,30 @@ class HomePage extends StatelessWidget {
           Container(
             width: 1.sw,
             margin: EdgeInsets.only(top: 18.h),
-            padding: EdgeInsets.symmetric(
-              vertical: isSmallScreen ? 5.w : 10.w,
-              horizontal: isTablet ? 20.w : (isSmallScreen ? 10.w : 15.w),
-            ),
+            padding: EdgeInsets.symmetric(vertical: isSmallScreen ? 5.w : 10.w, horizontal: isTablet ? 20.w : (isSmallScreen ? 10.w : 15.w)),
             constraints: BoxConstraints(minHeight: Get.height - 200.h),
-            decoration: BoxDecoration(
-              color: AppColors.white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(16.r),
-                topRight: Radius.circular(16.r),
-              ),
-            ),
+            decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r))),
             child: _getController.subjectModel.value.data == null
-                ? GridView.builder(
-              itemCount: 3,
-              shrinkWrap: true,
-              padding: EdgeInsets.zero,
-              physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: isTablet ? 2 : 1,
-                crossAxisSpacing: isTablet ? 20.w : (isSmallScreen ? 8.w : 10.w),
-                mainAxisSpacing: isTablet ? 20.h : (isSmallScreen ? 8.h : 10.h),
-                childAspectRatio: isTablet ? 1.3 : (isSmallScreen ? 1.0 : 1.3), // Kichik ekranlarda balandroq
-              ),
-              itemBuilder: (context, index) => Skeletonizer(
-                child: HomeItem(
-                  title: 'Salom, Dilshodjon',
-                  image: '',
-                  index: index,
-                  sId: 'siwu898au89a',
-                ),
-              ),
-            )
-                : _getController.subjectModel.value.data!.isNotEmpty
+                ? GridView.builder(itemCount: 3, shrinkWrap: true, padding: EdgeInsets.zero, physics: const NeverScrollableScrollPhysics(), gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: isTablet ? 2 : 1, crossAxisSpacing: isTablet ? 20.w : (isSmallScreen ? 8.w : 10.w), mainAxisSpacing: isTablet ? 20.h : (isSmallScreen ? 8.h : 10.h), childAspectRatio: isTablet ? 1.3 : (isSmallScreen ? 1.0 : 1.3)), itemBuilder: (context, index) => Skeletonizer(child: HomeItem(title: 'Salom, Dilshodjon', image: '', index: index, sId: 'siwu898au89a'))) : _getController.subjectModel.value.data!.isNotEmpty
                 ? GridView.builder(
               itemCount: _getController.subjectModel.value.data!.length,
               shrinkWrap: true,
               padding: EdgeInsets.zero,
               physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: isTablet ? 2 : 1,
-                crossAxisSpacing: isTablet ? 20.w : (isSmallScreen ? 8.w : 10.w),
-                mainAxisSpacing: isTablet ? 20.h : (isSmallScreen ? 8.h : 10.h),
-                childAspectRatio: isTablet ? 1.3 : (isSmallScreen ? 1.0 : 1.3),
-              ),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: isTablet ? 2 : 1, crossAxisSpacing: isTablet ? 20.w : (isSmallScreen ? 8.w : 10.w), mainAxisSpacing: isTablet ? 20.h : (isSmallScreen ? 8.h : 10.h), childAspectRatio: isTablet ? 1.3 : (isSmallScreen ? 1.0 : 1.3)),
               itemBuilder: (context, index) {
                 if (_getController.subjectModel.value.data![index].title == null) {
                   _getController.clearSubjectModel();
                   ApiController().getSubject();
                   return Container();
                 }
-                return HomeItem(
-                  title: _getController.subjectModel.value.data![index].title.toString(),
-                  image: _getController.subjectModel.value.data![index].photo.toString(),
-                  index: index,
-                  sId: _getController.subjectModel.value.data![index].sId.toString(),
-                );
-              },
+                return HomeItem(title: _getController.subjectModel.value.data![index].title.toString(), image: _getController.subjectModel.value.data![index].photo.toString(), index: index, sId: _getController.subjectModel.value.data![index].sId.toString());
+              }
+            ) : Center(child: TextSmall(text: 'Ma’lumotlar yo’q', color: AppColors.black, fontSize: isTablet ? 14.sp : (isSmallScreen ? 14.sp : 16.sp), fontWeight: FontWeight.w500)
             )
-                : Center(
-              child: TextSmall(
-                text: 'Ma’lumotlar yo’q',
-                color: AppColors.black,
-                fontSize: isTablet ? 14.sp : (isSmallScreen ? 14.sp : 16.sp),
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
-        ],
-      )),
+          )
+        ]
+      ))
     );
   }
 }

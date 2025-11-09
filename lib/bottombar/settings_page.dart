@@ -68,11 +68,49 @@ class SettingsPage extends StatelessWidget {
             SizedBox(height: 20.h),
             Divider(color: AppColors.grey6, height: 1.h),
             SizedBox(height: 10.h),
+            if(_getController.meModel.value.data?.doc?.paid == false)
+            AccItem(
+                title: 'To’lov qilish',
+                //icon: FluentIcons.credit_card_24_regular,
+                icon: FluentIcons.wallet_credit_card_24_regular,
+                subTitle: '',
+                onTaps: () => InstrumentComponents().bottomSheetPayment()
+            ),
             AccItem(title: 'Dastur haqida', icon: FluentIcons.info_24_regular, subTitle: '', onTaps: () => Get.to(() => AppInfoPage())),
             AccItem(title: 'Test natijalari', icon: FluentIcons.document_bullet_list_24_regular, subTitle: '', onTaps: () => Get.to(() => QuestionInfoPage())),
-            //AccItem(title: 'To’lovlar tarixi', icon: FluentIcons.credit_card_clock_24_regular, subTitle: '', onTaps: () => Get.to(() => PaymentHistoryPage())),
+            AccItem(title: 'To’lovlar tarixi', icon: FluentIcons.credit_card_clock_24_regular, subTitle: '', onTaps: () => Get.to(() => PaymentHistoryPage())),
             AccItem(title: 'Tilni o‘zgartirish', icon: FluentIcons.globe_24_regular, subTitle: 'uz_UZ' == _getController.getLocale() ? 'O‘zbekcha' : 'oz_OZ' == _getController.getLocale() ? 'Ўзбекча' : 'Русский', onTaps: () => InstrumentComponents().languageDialog(context)),
-            AccItem(title: 'Ilovadan chiqish', icon: FluentIcons.arrow_exit_20_filled, color: AppColors.red, subTitle: '', onTaps: () => InstrumentComponents().logOutDialog(context)),
+            //AccItem(title: 'Ilovadan chiqish', icon: FluentIcons.arrow_exit_20_filled, color: AppColors.red, subTitle: '', onTaps: () => InstrumentComponents().logOutDialog(context)),
+            //delete account.
+            Container(
+              width: 1.sw,
+              margin: EdgeInsets.only(top: 10.h),
+              padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 15.w),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12.r),
+                border: Border.all(color: AppColors.grey6)
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  AccItem(title: 'Ilovadan chiqish', icon: FluentIcons.arrow_exit_20_filled, color: AppColors.grey3, subTitle: '', onTaps: () => InstrumentComponents().logOutDialog(context)),
+                  SizedBox(height: 5.h),
+                  Divider(color: AppColors.grey6, height: 1.h),
+                  SizedBox(height: 5.h),
+                  AccItem(
+                    title: 'Hisobni o‘chirish',
+                    icon: FluentIcons.delete_24_regular,
+                    color: AppColors.red,
+                    subTitle: '',
+                    onTaps: () {
+                      _getController.startDeleteCountdown();
+                      InstrumentComponents().bottomSheetAccountsDelete(context);
+                    }
+                  )
+                ],
+              )
+            )
           ]
       )
     );

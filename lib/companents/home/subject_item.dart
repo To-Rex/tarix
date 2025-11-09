@@ -42,13 +42,7 @@ class SubjectItem extends StatelessWidget {
                     margin: EdgeInsets.only(right: 15.w, top: 15.h),
                     padding: EdgeInsets.all(5.sp),
                     decoration: BoxDecoration(color: AppColors.grey6, borderRadius: BorderRadius.circular(10.r)),
-                    child: Container(padding: EdgeInsets.all(5.sp), decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.circular(10.r)),
-                        child: image == ''
-                            ? Container(width: 50.w, height: 50.h, decoration: BoxDecoration(color: AppColors.grey6, borderRadius: BorderRadius.circular(10.r)))
-                            : image.contains('.svg')
-                            ? SvgPicture.network(image, fit: BoxFit.cover)
-                            : Image.network(image, fit: BoxFit.cover)
-                    )
+                    child: Container(padding: EdgeInsets.all(5.sp), decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.circular(10.r)), child: image == '' ? Container(width: 50.w, height: 50.h, decoration: BoxDecoration(color: AppColors.grey6, borderRadius: BorderRadius.circular(10.r))) : image.contains('.svg') ? SvgPicture.network(image, fit: BoxFit.cover) : Image.network(image, fit: BoxFit.cover))
                   )
                 ]
               ),

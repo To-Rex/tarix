@@ -23,12 +23,7 @@ class DetailedPage extends StatelessWidget {
     ApiController().getSubjectCategory(sId);
     return Scaffold(
       backgroundColor: AppColors.white,
-      appBar: AppBar(
-        backgroundColor: AppColors.white,
-        foregroundColor: AppColors.black,
-        title: TextSmall(text: title, color: AppColors.black, fontSize: 20.sp, fontWeight: FontWeight.w500),
-        centerTitle: false,
-      ),
+      appBar: AppBar(backgroundColor: AppColors.white, foregroundColor: AppColors.black, title: TextSmall(text: title, color: AppColors.black, fontSize: 20.sp, fontWeight: FontWeight.w500), centerTitle: false),
       body: RefreshComponent(
           color: AppColors.black,
           scrollController: _getController.scrollDetailController,
@@ -72,11 +67,7 @@ class DetailedPage extends StatelessWidget {
               shrinkWrap: true,
               padding: EdgeInsets.zero,
               physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) => Container(
-                  padding: EdgeInsets.symmetric(horizontal: 15.w),
-                  child: Skeletonizer(child: SubjectItem(
-                      image: '', title: '', index: index, sId: '', type: '', withGrade: false, subtitle: '')
-                  )))
+              itemBuilder: (context, index) => Container(padding: EdgeInsets.symmetric(horizontal: 15.w), child: Skeletonizer(child: SubjectItem(image: '', title: '', index: index, sId: '', type: '', withGrade: false, subtitle: ''))))
           )
       )
     );

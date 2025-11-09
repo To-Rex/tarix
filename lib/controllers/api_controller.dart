@@ -6,9 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
+import '../companents/settings/instrument_components.dart';
 import '../models/app_info_model.dart';
 import '../models/grade_model.dart';
 import '../models/me_model.dart';
+import '../models/payment_history.dart';
 import '../models/presentation_model.dart';
 import '../models/quiz_model.dart';
 import '../models/subject_model.dart';
@@ -147,17 +149,36 @@ class ApiController extends GetxController {
       debugPrint(response.statusCode.toString());
       if (response.statusCode == 200 || response.statusCode == 201) {
         final data = jsonDecode(response.body);
-        debugPrint(data.toString());
+        debugPrint('me: $data');
         _getController.changeMeModel(MeModel.fromJson(data));
         getSubject();
         Get.offAll(() => SamplePage());
       } else {
         Get.offAll(() =>  const ErrorPage());
+        _getController.signOut();
         print('=====================================================suuu Xa otam nima bo`lyapti');
       }
     } catch (e) {
       Get.offAll(() =>  const ErrorPage());
       print(e);
+    }
+  }
+
+  //delete profile https://history.enko.uz/mobile/auth/delete/account
+  Future<void> deleteProfile() async {
+    try {
+      final response = await http.delete(Uri.parse('$baseUrl/mobile/auth/delete/account'), headers: headersBearer());
+      debugPrint(response.body);
+      debugPrint(response.statusCode.toString());
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        Get.back();
+        _getController.signOut();
+        InstrumentComponents().shoeToast('Muvaffaqiyatli'.tr, 'Hisob muvaffaqiyatli o‘chirildi'.tr, false, 2000);
+      }
+    } catch (e) {
+      print(e);
+      Get.back();
+      InstrumentComponents().shoeToast('Xatolik'.tr, 'Hisob o‘chirilmadi'.tr, true, 2000);
     }
   }
 
@@ -261,6 +282,29 @@ class ApiController extends GetxController {
       }
     } catch (e) {
       print('suuu');
+      print(e);
+    }
+  }
+
+  //mobile/payment/list
+  Future<void> getPaymentHistory() async {
+    try {
+      final response = await http.get(
+          Uri.parse('$baseUrl/mobile/payment/list'), headers: headersBearer());
+      debugPrint(response.body);
+      debugPrint(response.statusCode.toString());
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final data = jsonDecode(response.body);
+        debugPrint(data.toString());
+        _getController.changePaymentModel(PaymentHistory.fromJson(data));
+      }
+      else {
+        print(
+            '=====================================================Xa otam nima bo`lyapti');
+        Get.snackbar('Xatolik', 'Email yoki parol xato',
+            snackPosition: SnackPosition.BOTTOM);
+      }
+    } catch (e) {
       print(e);
     }
   }

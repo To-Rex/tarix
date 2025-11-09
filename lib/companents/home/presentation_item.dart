@@ -75,10 +75,8 @@ class PresentationItem extends StatelessWidget {
                               ]
                           )
                       )
-                  ),
-                  if (isFree && price != '0')
-                    TextSmall(text: '${_getController.getMoneyFormat(price)} ${'so‘m'.tr}', color: AppColors.lightGreen, fontSize: 18.sp, fontWeight: FontWeight.w600)
-                ],
+                  )
+                ]
               )
             ]
         )

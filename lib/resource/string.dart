@@ -58,6 +58,11 @@ class LocaleString extends Translations{
       'Bildirishnomalar':'Bildirishnomalar',
       'Javob': 'Javob',
       'Savol': 'Savol',
+      'Hisobni o‘chirish':'Hisobni o‘chirish',
+      'Muvaffaqiyatli':'Muvaffaqiyatli',
+      'Hisob muvaffaqiyatli o‘chirildi': 'Hisob muvaffaqiyatli o‘chirildi',
+      'Hisob o‘chirilmadi': 'Hisob o‘chirilmadi',
+      'delete log': 'Hisobingizni o‘chirish orqali barcha ma’lumotlaringiz, sozlamalaringiz va faoliyat tarixi butunlay yo‘q qilinadi. Ushbu amalni bekor qilib bo‘lmaydi.',
     },
     'ru_RU': {
       'name':'Дилшоджон',
@@ -114,6 +119,12 @@ class LocaleString extends Translations{
       'Bildirishnomalar':'Уведомления',
       'Javob': 'Ответ',
       'Savol': 'Вопрос',
+      'Hisobni o‘chirish':'Удалить аккаунт',
+      'Muvaffaqiyatli':'Успешно',
+      'Hisob muvaffaqiyatli o‘chirildi': 'Аккаунт успешно удалён',
+      'Hisob o‘chirilmadi': 'Аккаунт не удалён',
+      'delete log': 'При удалении вашей учетной записи все ваши данные, настройки и история активности будут полностью удалены. Это действие невозможно отменить.',
+
     }
   };
 }

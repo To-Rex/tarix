@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../../companents/filds/text_small.dart';
 import '../../resource/app_colors.dart';
 import '../../screens/splash_screen.dart';
+import '../splash_screen.dart';
 
 class ErrorPage extends StatelessWidget {
   const ErrorPage({super.key});
