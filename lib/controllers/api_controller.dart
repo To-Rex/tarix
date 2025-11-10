@@ -152,6 +152,7 @@ class ApiController extends GetxController {
         debugPrint('me: $data');
         _getController.changeMeModel(MeModel.fromJson(data));
         getSubject();
+        _getController.changeWidgetOptions();
         Get.offAll(() => SamplePage());
       } else {
         Get.offAll(() =>  const ErrorPage());

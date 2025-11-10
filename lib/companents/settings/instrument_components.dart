@@ -185,7 +185,7 @@ class InstrumentComponents {
       StatefulBuilder(
             builder: (BuildContext context, StateSetter setState) {
               return Container(
-                  height: Get.height * 0.5,
+                  height: Get.height * 0.6,
                   padding: EdgeInsets.only(left: 15.w, right: 15.w),
                   width: double.infinity,
                   child: Column(
@@ -227,18 +227,7 @@ class InstrumentComponents {
                         Container(
                           margin: EdgeInsets.symmetric(vertical: 20.h),
                           height: 1.h, // Matches Divider thickness
-                          decoration: const BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                AppColors.white, // Start with white
-                                AppColors.black, // Darken in the center
-                                AppColors.white, // Fade back to white
-                              ],
-                              stops: [0.0, 0.5, 1.0], // Control gradient transition points
-                              begin: Alignment.centerLeft,
-                              end: Alignment.centerRight,
-                            ),
-                          ),
+                          decoration: const BoxDecoration(gradient: LinearGradient(colors: [AppColors.white, AppColors.black, AppColors.white], stops: [0.0, 0.5, 1.0], begin: Alignment.centerLeft, end: Alignment.centerRight))
                         ),
 
                         Row(
@@ -272,34 +261,28 @@ class InstrumentComponents {
                           ),
                           child: TextSmall(text: 'To‘lash'.tr, color: AppColors.white, fontWeight: FontWeight.bold, fontSize: 18.sp),
                           onPressed: () async {
-
                             Get.back();
                             print('clicked button to pay');
                             final String merchantId = "68aebc7dd0369401e31bb756";
-                            //final String email = "kuchkarov.aziz.08@gmail.com";
                             final String email = _getController.meModel.value.data?.doc?.email ?? "";
-                            //final int amount = 5000000; // so‘mda
                             final int amount = _getController.meModel.value.data!.appPrice! * 100;
-
-                            // Payme uchun string format
                             final String raw = "m=$merchantId;ac.email=$email;a=$amount";
                             print(raw);
-
-                            // base64 ga o‘tkazish
                             final String encoded = base64Encode(utf8.encode(raw));
-
-                            // Yakuniy URL
                             final Uri url = Uri.parse("https://checkout.paycom.uz/$encoded");
                             print(url.toString());
 
-                            if (await canLaunchUrl(url)) {
-                            await launchUrl(url, mode: LaunchMode.externalApplication);
-                            } else {
-                            print("❌ URL ni ochib bo‘lmadi");
+                            try {
+                              await launchUrl(url, mode: LaunchMode.externalApplication);
+                              print("✅ URL muvaffaqiyatli ochildi");
+                            } catch (e) {
+                              print("❌ URL ochishda xatolik: $e");
+                              // Foydalanuvchiga xabar ko'rsating, masalan:
+                              shoeToast('Xatolik', 'To\'lov sahifasini ochib bo\'lmadi. Brauzerni tekshiring.', true, 3);
                             }
-                          },
+                          }
                         ),
-                        SizedBox(height: Get.height * 0.06),
+                        SizedBox(height: Get.height * 0.1),
                       ]
                   )
               );

@@ -18,7 +18,7 @@ class SamplePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _getController.changeWidgetOptions();
+    //_getController.changeWidgetOptions();
     return Scaffold(
       backgroundColor: AppColors.grey6,
         drawerEnableOpenDragGesture: false,
