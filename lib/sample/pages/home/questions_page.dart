@@ -37,7 +37,7 @@ class QuestionsPage extends StatelessWidget {
           ),
           centerTitle: false,
           bottom: PreferredSize(
-            preferredSize: Size.fromHeight(60.h), // SearchItem balandligi
+            preferredSize: Size.fromHeight(60.h),
             child: Padding(
               padding: EdgeInsets.only(bottom: 8.h),
               child: SearchItem(
@@ -52,15 +52,10 @@ class QuestionsPage extends StatelessWidget {
         body: RefreshComponent(
             color: AppColors.black,
             scrollController: _getController.scrollQuestionsController,
-            refreshController: _getController.refreshQuestionsController,
-            enablePullUp: false,
             physics: const ClampingScrollPhysics(),
             onRefresh: () async {
               _getController.clearQuizModel();
-              ApiController().getQuiz(sId).then((value){
-                _getController.refreshQuestionsController.refreshCompleted();
-                _getController.refreshQuestionsController.loadComplete();
-              });
+              await ApiController().getQuiz(sId);
             },
             child: Obx(() => _getController.quizModel.value.data != null
                 ? _getController.quizModel.value.data!.data!.isNotEmpty
@@ -80,7 +75,7 @@ class QuestionsPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             TextSmall(
-                                text: 'Barcha imkoniyatlardan foydalanish uchun ilovaning to‘liq versiyasini sotib oling',
+                                text: 'Barcha imkoniyatlardan foydalanish uchun ilovaning to\u2019liq versiyasini sotib oling',
                                 color: AppColors.white,
                                 fontSize: 20.sp,
                                 fontWeight: FontWeight.w500,
@@ -90,7 +85,7 @@ class QuestionsPage extends StatelessWidget {
                             const Divider(color: AppColors.white, thickness: 1),
                             SizedBox(height: 5.h),
                             TextSmall(
-                                text: '${'To‘lov miqdori'.tr}: ${_getController.meModel.value.data?.appPrice ?? 0} ${'so‘m'.tr}',
+                                text: '${'To\u2019lov miqdori'.tr}: ${_getController.meModel.value.data?.appPrice ?? 0} ${'so\u2019m'.tr}',
                                 color: AppColors.white,
                                 fontSize: 20.sp,
                                 fontWeight: FontWeight.w500,
@@ -106,17 +101,11 @@ class QuestionsPage extends StatelessWidget {
                               onPressed: () async {
                                 print('clicked button to pay');
                                 final String merchantId = "68aebc7dd0369401e31bb756";
-                                //final String email = "kuchkarov.aziz.08@gmail.com";
                                 final String email = _getController.meModel.value.data?.doc?.email ?? "";
-                                final int amount = 5000000; // so‘mda
+                                final int amount = 5000000;
 
-                                // Payme uchun string format
                                 final String raw = "m=$merchantId;ac.email=$email;a=$amount";
-
-                                // base64 ga o‘tkazish
                                 final String encoded = base64Encode(utf8.encode(raw));
-
-                                // Yakuniy URL
                                 final Uri url = Uri.parse("https://checkout.paycom.uz/$encoded");
 
                                 if (await canLaunchUrl(url)) {
@@ -125,17 +114,16 @@ class QuestionsPage extends StatelessWidget {
                                     mode: LaunchMode.externalApplication,
                                   );
                                 } else {
-                                  print("❌ URL ni ochib bo‘lmadi");
+                                  print("URL ni ochib bo\u2019lmadi");
                                 }
 
                                 },
-                              child: TextSmall(text: 'To‘lov qilish', color: AppColors.white, fontSize: 18.sp, fontWeight: FontWeight.w500),
+                              child: TextSmall(text: 'To\u2019lov qilish', color: AppColors.white, fontSize: 18.sp, fontWeight: FontWeight.w500),
                             )
                           ]
                       )
                   );
                 }
-                // Quiz items for other indices
                 final dataIndex = index ;
                 return Container(
                   padding: EdgeInsets.symmetric(horizontal: 15.w),
@@ -155,7 +143,7 @@ class QuestionsPage extends StatelessWidget {
                 constraints: BoxConstraints(minHeight: Get.height - 200.h),
                 decoration:  BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r))),
                 alignment: Alignment.center,
-                child: TextSmall(text: 'Ma’lumotlar yo’q', color: AppColors.black, fontSize: 16.sp, fontWeight: FontWeight.w500))
+                child: TextSmall(text: 'Ma\u2019lumotlar yo\u2019q', color: AppColors.black, fontSize: 16.sp, fontWeight: FontWeight.w500))
                 : ListView.builder(
                 itemCount: 10,
                 shrinkWrap: true,

@@ -34,7 +34,7 @@ class SubjectItem extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Padding(padding: EdgeInsets.symmetric(horizontal: 15.w), child: TextSmall(text: title, color: AppColors.black, fontSize: 24.sp, fontWeight: FontWeight.bold)),
+                  Padding(padding: EdgeInsets.symmetric(horizontal: 15.w), child: TextSmall(text: title, color: AppColors.black, maxLines: 2, fontSize: 24.sp, fontWeight: FontWeight.bold)),
                   const Spacer(),
                   Container(
                     width: 58.w,
@@ -67,7 +67,7 @@ class SubjectItem extends StatelessWidget {
                           padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 12.h),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r))
                       ),
-                      child: TextSmall(text: 'Batafsil ko‘rish', color: AppColors.white, fontSize: 18.sp, fontWeight: FontWeight.bold)
+                      child: TextSmall(text: 'Batafsil ko‘rish', color: AppColors.white, fontSize: 16.sp, fontWeight: FontWeight.bold)
                   )
               )
             ]

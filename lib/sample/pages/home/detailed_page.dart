@@ -27,15 +27,10 @@ class DetailedPage extends StatelessWidget {
       body: RefreshComponent(
           color: AppColors.black,
           scrollController: _getController.scrollDetailController,
-          refreshController: _getController.refreshDetailController,
-          enablePullUp: false,
           physics: const ClampingScrollPhysics(),
           onRefresh: () async {
             _getController.clearSubjectCatModel();
-            ApiController().getSubjectCategory(sId).then((value){
-              _getController.refreshDetailController.refreshCompleted();
-              _getController.refreshDetailController.loadComplete();
-            });
+            await ApiController().getSubjectCategory(sId);
           },
           child: Obx(() => _getController.subjectCatModel.value.data != null
               ? _getController.subjectCatModel.value.data!.isNotEmpty
@@ -61,7 +56,7 @@ class DetailedPage extends StatelessWidget {
               constraints: BoxConstraints(minHeight: Get.height - 200.h),
               decoration:  BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r))),
               alignment: Alignment.center,
-              child: TextSmall(text: 'Ma’lumotlar yo’q', color: AppColors.black, fontSize: 16.sp, fontWeight: FontWeight.w500))
+              child: TextSmall(text: 'Ma\u2019lumotlar yo\u2019q', color: AppColors.black, fontSize: 16.sp, fontWeight: FontWeight.w500))
               : ListView.builder(
               itemCount: 5,
               shrinkWrap: true,

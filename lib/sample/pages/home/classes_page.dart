@@ -27,30 +27,25 @@ class ClassesPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppColors.white,
         foregroundColor: AppColors.black,
+        surfaceTintColor: AppColors.white,
         title: TextSmall(text: title, color: AppColors.black,fontSize: 20.sp, fontWeight: FontWeight.w500),
         centerTitle: false,
       ),
       body: RefreshComponent(
           color: AppColors.black,
           scrollController: _getController.scrollClassesController,
-          refreshController: _getController.refreshClassesController,
-          enablePullUp: false,
           physics: const ClampingScrollPhysics(),
           onRefresh: () async {
             _getController.clearGradeModel();
-            _getController.refreshClassesController.refreshCompleted();
-            _getController.refreshClassesController.loadComplete();
-            ApiController().getGrade(sId, type).then((value){
-              _getController.refreshClassesController.refreshCompleted();
-              _getController.refreshClassesController.loadComplete();
-            });
-            },
+            await ApiController().getGrade(sId, type);
+          },
+
           child: Obx(() => _getController.gradeModel.value.data != null
               ? _getController.gradeModel.value.data!.isNotEmpty
               ? ListView.builder(
               itemCount: _getController.gradeModel.value.data!.length,
               shrinkWrap: true,
-              padding: EdgeInsets.zero,
+              padding: EdgeInsets.only(bottom: 150.h),
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) => Container(
                   padding: EdgeInsets.symmetric(horizontal: 15.w),
@@ -68,7 +63,7 @@ class ClassesPage extends StatelessWidget {
               constraints: BoxConstraints(minHeight: Get.height - 200.h),
               decoration:  BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r))),
               alignment: Alignment.center,
-              child: TextSmall(text: 'Ma’lumotlar yo’q', color: AppColors.black, fontSize: 16.sp, fontWeight: FontWeight.w500))
+              child: TextSmall(text: 'Ma\u2019lumotlar yo\u2019q', color: AppColors.black, fontSize: 16.sp, fontWeight: FontWeight.w500))
               : Skeletonizer(child: ListView.builder(
               itemCount: 10,
                 shrinkWrap: true,

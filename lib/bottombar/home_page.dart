@@ -2,7 +2,6 @@ import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import '../companents/filds/text_small.dart';
 import '../companents/home/home_item.dart';
@@ -18,7 +17,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final RefreshController refreshHomeController = RefreshController(initialRefresh: false);
     final ScrollController scrollHomeController = ScrollController();
 
     final double screenWidth = ScreenUtil().screenWidth;
@@ -32,15 +30,10 @@ class HomePage extends StatelessWidget {
     return RefreshComponent(
       color: AppColors.black,
       scrollController: scrollHomeController,
-      refreshController: refreshHomeController,
-      enablePullUp: false,
       physics: const AlwaysScrollableScrollPhysics(),
       onRefresh: () async {
         _getController.clearSubjectModel();
-        ApiController().getSubject().then((value) {
-          refreshHomeController.refreshCompleted();
-          refreshHomeController.loadComplete();
-        });
+        await ApiController().getSubject();
       },
       child: Obx(() => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,7 +52,7 @@ class HomePage extends StatelessWidget {
                     children: [
                       TextSmall(text: '${'Salom'.tr}, ${_getController.meModel.value.data?.doc?.fullName ?? ''} 👋', color: AppColors.black, fontSize: isTablet ? 20.sp : (isSmallScreen ? 20.sp : 24.sp), fontWeight: FontWeight.bold, maxLines: 1, overflow: TextOverflow.ellipsis),
                       SizedBox(height: 3.h),
-                      TextSmall(text: 'Yangi bilimlarni o‘rganishga tayyormisiz?', color: AppColors.grey3, fontSize: isTablet ? 14.sp : (isSmallScreen ? 14.sp : 16.sp), fontWeight: FontWeight.w600, maxLines: 2)
+                      TextSmall(text: 'Yangi bilimlarni o\u2019rganishga tayyormisiz?', color: AppColors.grey3, fontSize: isTablet ? 14.sp : (isSmallScreen ? 14.sp : 16.sp), fontWeight: FontWeight.w600, maxLines: 2)
                     ]
                   )
                 ),
@@ -87,13 +80,11 @@ class HomePage extends StatelessWidget {
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: isTablet ? 2 : 1, crossAxisSpacing: isTablet ? 20.w : (isSmallScreen ? 8.w : 10.w), mainAxisSpacing: isTablet ? 20.h : (isSmallScreen ? 8.h : 10.h), childAspectRatio: isTablet ? 1.3 : (isSmallScreen ? 1.0 : 1.3)),
               itemBuilder: (context, index) {
                 if (_getController.subjectModel.value.data![index].title == null) {
-                  //_getController.clearSubjectModel();
-                  //ApiController().getSubject();
                   return Container();
                 }
                 return HomeItem(title: _getController.subjectModel.value.data![index].title.toString(), image: _getController.subjectModel.value.data![index].photo.toString(), index: index, sId: _getController.subjectModel.value.data![index].sId.toString());
               }
-            ) : Center(child: TextSmall(text: 'Ma’lumotlar yo’q', color: AppColors.black, fontSize: isTablet ? 14.sp : (isSmallScreen ? 14.sp : 16.sp), fontWeight: FontWeight.w500))
+            ) : Center(child: TextSmall(text: 'Ma\u2019lumotlar yo\u2019q', color: AppColors.black, fontSize: isTablet ? 14.sp : (isSmallScreen ? 14.sp : 16.sp), fontWeight: FontWeight.w500))
           )
         ]
       ))

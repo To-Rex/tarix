@@ -29,15 +29,10 @@ class PresentationPage extends StatelessWidget {
       body: RefreshComponent(
         color: AppColors.black,
         scrollController: _getController.scrollPresentationController,
-        refreshController: _getController.refreshPresentationController,
-        enablePullUp: false,
         physics: const ClampingScrollPhysics(),
         onRefresh: () async {
           _getController.clearPresentationModel();
-          ApiController().getPresentation(sId, isGrade).then((value){
-            _getController.refreshPresentationController.refreshCompleted();
-            _getController.refreshPresentationController.loadComplete();
-          });
+          await ApiController().getPresentation(sId, isGrade);
         },
         child: Obx(() => _getController.presentationModel.value.data != null
             ? _getController.presentationModel.value.data!.isNotEmpty
@@ -60,7 +55,6 @@ class PresentationPage extends StatelessWidget {
                       file: _getController.presentationModel.value.data![index].file.toString(),
                       mimetype: _getController.presentationModel.value.data![index].mimetype.toString(),
                       price: _getController.presentationModel.value.data![index].price.toString(),
-                      //isFree: _getController.presentationModel.value.data![index].isFree.toString() == 'true' ? true : false
                       isFree: _getController.meModel.value.data?.doc?.paid == true ? true : _getController.presentationModel.value.data![index].isFree.toString() == 'true' ? true : false
                   )
               );
@@ -72,7 +66,7 @@ class PresentationPage extends StatelessWidget {
             constraints: BoxConstraints(minHeight: Get.height - 200.h),
             decoration:  BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r))),
             alignment: Alignment.center,
-            child: TextSmall(text: 'Ma’lumotlar yo’q', color: AppColors.black, fontSize: 16.sp, fontWeight: FontWeight.w500))
+            child: TextSmall(text: 'Ma\u2019lumotlar yo\u2019q', color: AppColors.black, fontSize: 16.sp, fontWeight: FontWeight.w500))
             : ListView.builder(
             itemCount: 10,
             shrinkWrap: true,

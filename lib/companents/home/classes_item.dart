@@ -29,7 +29,7 @@ class ClassesItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(padding: EdgeInsets.symmetric(horizontal: 15.w), child: TextSmall(text: title, color: AppColors.black, fontSize: 24.sp, fontWeight: FontWeight.bold)),
+              Padding(padding: EdgeInsets.symmetric(horizontal: 15.w), child: TextSmall(text: title, maxLines:2, color: AppColors.black, fontSize: 22.sp, fontWeight: FontWeight.bold)),
               Container(
                   margin: EdgeInsets.only(left: 15.w, bottom: 14.h, top: 10.h),
                   child: ElevatedButton(
@@ -50,7 +50,7 @@ class ClassesItem extends StatelessWidget {
                           padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 12.h),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r))
                       ),
-                      child: TextSmall(text: 'Batafsil ko‘rish', color: AppColors.white, fontSize: 18.sp, fontWeight: FontWeight.bold)
+                      child: TextSmall(text: 'Batafsil ko‘rish', color: AppColors.white, fontSize: 16.sp, fontWeight: FontWeight.bold)
                   )
               )
             ]

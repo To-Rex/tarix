@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../bottombar/home_page.dart';
 import '../bottombar/settings_page.dart';
 import '../companents/settings/instrument_components.dart';
@@ -36,14 +35,6 @@ class GetController extends GetxController {
   final timerText = '59:11'.obs;
   int seconds = 3551; // 59 daqiqa 11 sekund
   late Timer _timer;
-
-  final RefreshController refreshController = RefreshController(initialRefresh: false);
-  final RefreshController refreshDetailController = RefreshController(initialRefresh: false);
-  final RefreshController refreshSubCatController = RefreshController(initialRefresh: false);
-  final RefreshController refreshClassesController = RefreshController(initialRefresh: false);
-  final RefreshController refreshPresentationController = RefreshController(initialRefresh: false);
-  final RefreshController refreshQuestionsController = RefreshController(initialRefresh: false);
-  final RefreshController refreshPaymentHistoryController = RefreshController(initialRefresh: false);
 
   final ScrollController  scrollController = ScrollController();
   final ScrollController  scrollDetailController = ScrollController();

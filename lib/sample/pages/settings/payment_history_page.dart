@@ -5,7 +5,6 @@ import 'package:history/controllers/api_controller.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import '../../../companents/filds/text_small.dart';
 import '../../../companents/home/payment_history_item.dart';
-import '../../../companents/home/quiz_item.dart';
 import '../../../companents/refresh_component.dart';
 import '../../../controllers/get_controller.dart';
 import '../../../resource/app_colors.dart';
@@ -22,19 +21,13 @@ class PaymentHistoryPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.white,
       appBar: AppBar(
-        backgroundColor:  AppColors.white, surfaceTintColor: AppColors.white, title: TextSmall(text: 'To’lovlar tarixi', color: AppColors.black, fontSize: 20.sp, fontWeight: FontWeight.w500), centerTitle: true),
+        backgroundColor:  AppColors.white, surfaceTintColor: AppColors.white, title: TextSmall(text: 'To\u2019lovlar tarixi', color: AppColors.black, fontSize: 20.sp, fontWeight: FontWeight.w500), centerTitle: true),
         body: RefreshComponent(
             color: AppColors.black,
             scrollController: _getController.scrollPaymentHistoryController,
-            refreshController: _getController.refreshPaymentHistoryController,
-            enablePullUp: false,
             physics: const ClampingScrollPhysics(),
             onRefresh: () async {
-              _getController.clearQuizModel();
-              ApiController().getPaymentHistory().then((value){
-                _getController.refreshPaymentHistoryController.refreshCompleted();
-                _getController.refreshPaymentHistoryController.loadComplete();
-              });
+              await ApiController().getPaymentHistory();
             },
             child: Obx(() => _getController.paymentHistory.value.data != null
                 ? _getController.paymentHistory.value.data!.isNotEmpty
@@ -45,7 +38,6 @@ class PaymentHistoryPage extends StatelessWidget {
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
 
-                // Quiz items for other indices
                 final dataIndex = index ;
                 return Container(
                   padding: EdgeInsets.symmetric(horizontal: 15.w),
@@ -65,7 +57,7 @@ class PaymentHistoryPage extends StatelessWidget {
                 constraints: BoxConstraints(minHeight: Get.height - 200.h),
                 decoration:  BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r))),
                 alignment: Alignment.center,
-                child: TextSmall(text: 'Ma’lumotlar yo’q', color: AppColors.black, fontSize: 16.sp, fontWeight: FontWeight.w500))
+                child: TextSmall(text: 'Ma\u2019lumotlar yo\u2019q', color: AppColors.black, fontSize: 16.sp, fontWeight: FontWeight.w500))
                 : ListView.builder(
                 itemCount: 10,
                 shrinkWrap: true,
