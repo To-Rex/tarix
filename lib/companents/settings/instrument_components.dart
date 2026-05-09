@@ -107,73 +107,168 @@ class InstrumentComponents {
   );
 
   void languageDialog(BuildContext context) => Get.bottomSheet(
-      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.horizontal(right: Radius.circular(10.0),left: Radius.circular(10.0))),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(24.r))),
       enableDrag: true,
-      elevation: 15,
-      isScrollControlled: true, // Allows full control over height
-      backgroundColor: AppColors.white,
+      elevation: 0,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
       StatefulBuilder(
-            builder: (BuildContext context, StateSetter setState) {
-              return SizedBox(
-                  height: Get.height * 0.4,
-                  width: double.infinity,
-                  child: Column(
-                      children: [
-                        Container(
-                            height: 5.h,
-                            width: 100.w,
-                            margin: EdgeInsets.only(top: 20.h, bottom: 20.h),
-                            decoration: BoxDecoration(color: Theme.of(context).colorScheme.onSurface, borderRadius: BorderRadius.circular(20.r))
-                        ),
-                        SizedBox(height: Get.height * 0.04),
-                        Expanded(
-                            child: ListView.builder(
-                                itemCount: _getController.locale.length,
-                                itemBuilder: (context, index){
-                                  return Container(
-                                      height: 60.h,
-                                      width: Get.width,
-                                      padding: EdgeInsets.only(left: 15.w, right: 15.w),
+          builder: (BuildContext context, StateSetter setState) {
+            return Container(
+                decoration: BoxDecoration(
+                    color: AppColors.white,
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(24.r)),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.08),
+                          blurRadius: 20,
+                          offset: const Offset(0, -4)
+                      )
+                    ]
+                ),
+                child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      // Drag handle
+                      Container(
+                          height: 4.h,
+                          width: 40.w,
+                          margin: EdgeInsets.only(top: 12.h, bottom: 8.h),
+                          decoration: BoxDecoration(
+                              color: AppColors.grey5,
+                              borderRadius: BorderRadius.circular(10.r)
+                          )
+                      ),
+                      // Title section
+                      Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
+                          child: Row(
+                              children: [
+                                  Container(
+                                      width: 42.w,
+                                      height: 42.h,
+                                      decoration: BoxDecoration(
+                                          color: AppColors.grey8,
+                                          borderRadius: BorderRadius.circular(12.r)
+                                      ),
+                                      child: Icon(TablerIcons.language, color: AppColors.primaryColor, size: 22.sp)
+                                  ),
+                                  SizedBox(width: 14.w),
+                                  Expanded(
                                       child: Column(
-                                        children: [
-                                          InkWell(
-                                              overlayColor: WidgetStateProperty.all(Colors.transparent),
-                                              child: Column(
-                                                children: [
-                                                  Row(
-                                                      children: [
-                                                        if (_getController.locale[index]['locale'].toString() == _getController.language.toString())
-                                                          const Icon(TablerIcons.circle_filled, color: AppColors.lightGreen, size: 10),
-                                                        if (_getController.locale[index]['locale'].toString() == _getController.language.toString())
-                                                        SizedBox(width: 10.w),
-                                                        Image.asset(_getController.locale[index]['icon'], width: 33.w, height: 20.h),
-                                                        SizedBox(width: 10.w),
-                                                        TextSmall(
-                                                            text: _getController.locale[index]['name'],
-                                                            fontSize: 20.sp,
-                                                            color: _getController.locale[index]['locale'].toString() == _getController.language.toString() ? AppColors.lightGreen : AppColors.black,
-                                                        ),
-                                                      ]
-                                                  ),
-                                                  SizedBox(height: 10.h)
-                                                ]
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                              TextSmall(
+                                                  text: 'Tilni tanlang'.tr,
+                                                  fontSize: 18.sp,
+                                                  fontWeight: FontWeight.w700,
+                                                  color: AppColors.black,
                                               ),
-                                              onTap: (){
-                                                updateLanguage(_getController.locale[index]['locale']);
-                                                ApiController().getSubject();
-                                                Get.back();
-                                              }
-                                          )
-                                        ]
+                                              SizedBox(height: 2.h),
+                                              TextSmall(
+                                                  text: 'Ilova tilini o\'zgartiring'.tr,
+                                                  fontSize: 13.sp,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: AppColors.grey3,
+                                              ),
+                                          ]
                                       )
-                                  );
-                                }
+                                  )
+                              ]
+                          )
+                      ),
+                      // Divider
+                      Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20.w),
+                          child: Divider(color: AppColors.grey7, height: 1.h, thickness: 1)
+                      ),
+                      SizedBox(height: 8.h),
+                      // Language list
+                      ...List.generate(_getController.locale.length, (index) {
+                        final isSelected = _getController.locale[index]['locale'].toString() == _getController.language.toString();
+                        return Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 6.h),
+                            child: Material(
+                                color: Colors.transparent,
+                                child: InkWell(
+                                    borderRadius: BorderRadius.circular(16.r),
+                                    overlayColor: WidgetStateProperty.all(AppColors.primaryColor.withValues(alpha: 0.06)),
+                                    onTap: () {
+                                      updateLanguage(_getController.locale[index]['locale']);
+                                      ApiController().getSubject();
+                                      Get.back();
+                                    },
+                                    child: AnimatedContainer(
+                                        duration: const Duration(milliseconds: 250),
+                                        curve: Curves.easeInOut,
+                                        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
+                                        decoration: BoxDecoration(
+                                            color: isSelected ? AppColors.primaryColor.withValues(alpha: 0.07) : AppColors.grey8.withValues(alpha: 0.5),
+                                            borderRadius: BorderRadius.circular(16.r),
+                                            border: Border.all(
+                                                color: isSelected ? AppColors.primaryColor.withValues(alpha: 0.3) : Colors.transparent,
+                                                width: 1.5.w
+                                            )
+                                        ),
+                                        child: Row(
+                                            children: [
+                                              // Flag with container
+                                              Container(
+                                                  width: 58.w,
+                                                  height: 48.h,
+                                                  padding: EdgeInsets.all(10.r),
+                                                  decoration: BoxDecoration(
+                                                      color: isSelected ? AppColors.white : AppColors.grey7,
+                                                      borderRadius: BorderRadius.circular(12.r),
+                                                      boxShadow: isSelected
+                                                          ? [BoxShadow(color: AppColors.primaryColor.withValues(alpha: 0.15), blurRadius: 8, offset: const Offset(0, 2))]
+                                                          : []
+                                                  ),
+                                                  child: ClipRRect(
+                                                      borderRadius: BorderRadius.circular(4.r),
+                                                      child: Image.asset(_getController.locale[index]['icon'], fit: BoxFit.cover)
+                                                  )
+                                              ),
+                                              SizedBox(width: 16.w),
+                                              // Language name
+                                              Expanded(
+                                                  child: TextSmall(
+                                                      text: _getController.locale[index]['name'],
+                                                      fontSize: 16.sp,
+                                                      fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+                                                      color: isSelected ? AppColors.primaryColor : AppColors.darkGrey,
+                                                  )
+                                              ),
+                                              // Check indicator
+                                              AnimatedContainer(
+                                                  duration: const Duration(milliseconds: 250),
+                                                  width: isSelected ? 28.w : 0,
+                                                  height: isSelected ? 28.h : 0,
+                                                  decoration: BoxDecoration(
+                                                      color: AppColors.primaryColor,
+                                                      shape: BoxShape.circle,
+                                                      boxShadow: isSelected
+                                                          ? [BoxShadow(color: AppColors.primaryColor.withValues(alpha: 0.3), blurRadius: 8, offset: const Offset(0, 2))]
+                                                          : []
+                                                  ),
+                                                  child: isSelected
+                                                      ? Icon(TablerIcons.check, color: AppColors.white, size: 16.sp)
+                                                      : const SizedBox.shrink()
+                                              )
+                                            ]
+                                        )
+                                    )
+                                )
                             )
-                        )
-                      ]
-                  )
-              );
-            })
+                        );
+                      }),
+                      SizedBox(height: 16.h),
+                      // Bottom safe area
+                      SizedBox(height: MediaQuery.of(context).padding.bottom > 0 ? 8.h : 0),
+                    ]
+                )
+            );
+          })
   );
 
   void bottomSheetPayment() => Get.bottomSheet(
@@ -185,10 +280,11 @@ class InstrumentComponents {
       StatefulBuilder(
             builder: (BuildContext context, StateSetter setState) {
               return Container(
-                  height: Get.height * 0.6,
-                  padding: EdgeInsets.only(left: 15.w, right: 15.w),
+                  padding: EdgeInsets.only(left: 15.w, right: 15.w, bottom: 50.h),
                   width: double.infinity,
-                  child: Column(
+                  child: IntrinsicHeight(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         Container(
                             height: 5.h,
@@ -251,7 +347,6 @@ class InstrumentComponents {
                           ],
                         ),
                         SizedBox(height: 30.h),
-                        const Spacer(),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             fixedSize: Size(Get.width * 0.93, 50.h),
@@ -282,8 +377,8 @@ class InstrumentComponents {
                             }
                           }
                         ),
-                        SizedBox(height: Get.height * 0.1),
                       ]
+                    )
                   )
               );
             })

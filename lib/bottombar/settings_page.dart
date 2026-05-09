@@ -1,6 +1,7 @@
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:get/get.dart';
 import '../companents/filds/text_small.dart';
 import '../companents/settings/acc_item.dart';
@@ -59,11 +60,11 @@ class SettingsPage extends StatelessWidget {
               Divider(color: AppColors.grey6, height: 1.h),
               SizedBox(height: 10.h),
               if(_getController.meModel.value.data?.doc?.paid == false)
-                AccItem(title: 'To’lov qilish', icon: FluentIcons.wallet_credit_card_24_regular, subTitle: '', onTaps: () => InstrumentComponents().bottomSheetPayment()),
+                AccItem(title: 'To‘lov qilish', icon: FluentIcons.wallet_credit_card_24_regular, subTitle: '', onTaps: () => InstrumentComponents().bottomSheetPayment()),
               AccItem(title: 'Dastur haqida', icon: FluentIcons.info_24_regular, subTitle: '', onTaps: () => Get.to(() => AppInfoPage())),
               AccItem(title: 'Test natijalari', icon: FluentIcons.document_bullet_list_24_regular, subTitle: '', onTaps: () => Get.to(() => QuestionInfoPage())),
               AccItem(title: 'To’lovlar tarixi', icon: FluentIcons.credit_card_clock_24_regular, subTitle: '', onTaps: () => Get.to(() => PaymentHistoryPage())),
-              AccItem(title: 'Tilni o‘zgartirish', icon: FluentIcons.globe_24_regular, subTitle: 'uz_UZ' == _getController.getLocale() ? 'O‘zbekcha' : 'oz_OZ' == _getController.getLocale() ? 'Ўзбекча' : 'Русский', onTaps: () => InstrumentComponents().languageDialog(context)),
+              AccItem(title: 'Tilni o‘zgartirish', icon: TablerIcons.language, subTitle: 'uz_UZ' == _getController.getLocale() ? 'O‘zbekcha' : 'oz_OZ' == _getController.getLocale() ? 'Ўзбекча' : 'Русский', onTaps: () => InstrumentComponents().languageDialog(context)),
               Container(
                   width: 1.sw,
                   margin: EdgeInsets.only(top: 10.h, bottom: 150.h),

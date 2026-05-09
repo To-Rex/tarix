@@ -63,6 +63,11 @@ class LocaleString extends Translations{
       'Hisob muvaffaqiyatli o‘chirildi': 'Hisob muvaffaqiyatli o‘chirildi',
       'Hisob o‘chirilmadi': 'Hisob o‘chirilmadi',
       'delete log': 'Hisobingizni o‘chirish orqali barcha ma’lumotlaringiz, sozlamalaringiz va faoliyat tarixi butunlay yo‘q qilinadi. Ushbu amalni bekor qilib bo‘lmaydi.',
+      'Bildirishnomalar yo\'q': 'Bildirishnomalar yo\'q',
+      'notification_empty_desc': 'Sizda hozircha bildirishnomalar mavjud emas. Yangi bildirishnomalar shu yerda ko\'rinadi.',
+      'Orqaga qaytish': 'Orqaga qaytish',
+      'Tilni tanlang': 'Tilni tanlang',
+      'Ilova tilini o\'zgartiring': 'Ilova tilini o\'zgartiring',
     },
     'ru_RU': {
       'name':'Дилшоджон',
@@ -124,6 +129,11 @@ class LocaleString extends Translations{
       'Hisob muvaffaqiyatli o‘chirildi': 'Аккаунт успешно удалён',
       'Hisob o‘chirilmadi': 'Аккаунт не удалён',
       'delete log': 'При удалении вашей учетной записи все ваши данные, настройки и история активности будут полностью удалены. Это действие невозможно отменить.',
+      'Bildirishnomalar yo\'q': 'Нет уведомлений',
+      'notification_empty_desc': 'У вас пока нет уведомлений. Новые уведомления будут отображаться здесь.',
+      'Orqaga qaytish': 'Назад',
+      'Tilni tanlang': 'Выберите язык',
+      'Ilova tilini o\'zgartiring': 'Измените язык приложения',
 
     }
   };

@@ -13,7 +13,7 @@ class RefreshComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return RefreshIndicator(
         color: Colors.blue,
-        backgroundColor: color ?? Colors.white,
+        backgroundColor: Colors.white,
         displacement: 40,
         onRefresh: onRefresh ?? () async {},
         child: SingleChildScrollView(

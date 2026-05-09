@@ -52,7 +52,7 @@ class HomePage extends StatelessWidget {
                     children: [
                       TextSmall(text: '${'Salom'.tr}, ${_getController.meModel.value.data?.doc?.fullName ?? ''} 👋', color: AppColors.black, fontSize: isTablet ? 20.sp : (isSmallScreen ? 20.sp : 24.sp), fontWeight: FontWeight.bold, maxLines: 1, overflow: TextOverflow.ellipsis),
                       SizedBox(height: 3.h),
-                      TextSmall(text: 'Yangi bilimlarni o\u2019rganishga tayyormisiz?', color: AppColors.grey3, fontSize: isTablet ? 14.sp : (isSmallScreen ? 14.sp : 16.sp), fontWeight: FontWeight.w600, maxLines: 2)
+                      TextSmall(text: 'Yangi bilimlarni o‘rganishga tayyormisiz?', color: AppColors.grey3, fontSize: isTablet ? 14.sp : (isSmallScreen ? 14.sp : 16.sp), fontWeight: FontWeight.w600, maxLines: 2)
                     ]
                   )
                 ),
