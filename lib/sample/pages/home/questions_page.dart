@@ -132,7 +132,7 @@ class QuestionsPage extends StatelessWidget {
                                 }
 
                                 },
-                              child: TextSmall(text: 'To\u2019lov qilish', color: AppColors.white, fontSize: 18.sp, fontWeight: FontWeight.w500),
+                              child: TextSmall(text: 'To‘lov qilish', color: AppColors.white, fontSize: 18.sp, fontWeight: FontWeight.w500),
                             )
                           ]
                       )
