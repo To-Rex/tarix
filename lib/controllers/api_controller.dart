@@ -267,22 +267,45 @@ class ApiController extends GetxController {
   }
 
   //{{base_url}}/mobile/quiz/list?grade=67854e44587c8d0a611f520d
-  Future<void> getQuiz(String grade) async {
+  Future<void> getQuiz(String grade, {bool isLoadMore = false}) async {
     try {
+      if (isLoadMore) {
+        _getController.isLoadingMore.value = true;
+      } else {
+        _getController.clearQuizModel();
+      }
+
+      final limit = _getController.quizLimit;
+      final offset = isLoadMore ? _getController.quizOffset.value : 0;
+
       //https://history.enko.uz/api/mobile/quiz/list?grade=67854e44587c8d0a611f520d&search=Lojuvard
-      final response = await http.get(Uri.parse('$baseUrl/mobile/quiz/list?grade=$grade${_getController.searchQuizController.text.isNotEmpty ? '&search=${_getController.searchQuizController.text}' : ''}'), headers: headersBearer());
-      debugPrint('$baseUrl/mobile/quiz/list?grade=67854e44587c8d0a611f520d${_getController.searchQuizController.text.isNotEmpty ? '&search=${_getController.searchQuizController.text}' : ''}');
+      final response = await http.get(Uri.parse('$baseUrl/mobile/quiz/list?grade=$grade&limit=$limit&offset=$offset${_getController.searchQuizController.text.isNotEmpty ? '&search=${_getController.searchQuizController.text}' : ''}'), headers: headersBearer());
+      debugPrint('$baseUrl/mobile/quiz/list?grade=67854e44587c8d0a611f520d&limit=$limit&offset=$offset${_getController.searchQuizController.text.isNotEmpty ? '&search=${_getController.searchQuizController.text}' : ''}');
       debugPrint(response.body);
       debugPrint(response.statusCode.toString());
       if (response.statusCode == 200 || response.statusCode == 201) {
         final data = jsonDecode(response.body);
         debugPrint(data.toString());
-        _getController.changeQuizModel(QuizModel.fromJson(data));
+        final quizModel = QuizModel.fromJson(data);
+
+        if (isLoadMore) {
+          _getController.appendQuizData(quizModel);
+        } else {
+          _getController.changeQuizModel(quizModel);
+        }
+
+        _getController.quizOffset.value = (_getController.quizModel.value.data?.data?.length ?? 0);
+
+        if ((_getController.quizModel.value.data?.data?.length ?? 0) >= (quizModel.count ?? 0)) {
+          _getController.quizHasMore.value = false;
+        }
       } else {
         print('=====================================================Xa otam nima bo`lyapti');
         Get.snackbar('Xatolik', 'Email yoki parol xato', snackPosition: SnackPosition.BOTTOM);
       }
+      _getController.isLoadingMore.value = false;
     } catch (e) {
+      _getController.isLoadingMore.value = false;
       print('suuu');
       print(e);
     }

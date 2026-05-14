@@ -45,6 +45,11 @@ class GetController extends GetxController {
   final ScrollController  scrollQuestionsController = ScrollController();
   final ScrollController  scrollPaymentHistoryController = ScrollController();
 
+  RxInt quizOffset = 0.obs;
+  int quizLimit = 20;
+  RxBool quizHasMore = true.obs;
+  RxBool isLoadingMore = false.obs;
+
   //text editing controllers
   final TextEditingController searchQuizController = TextEditingController();
 
@@ -71,13 +76,29 @@ class GetController extends GetxController {
   void changeTestListModel(TestListModel model) => testListModel.value = model;
 
 
+  void appendQuizData(QuizModel model) {
+    if (quizModel.value.data?.data == null) {
+      quizModel.value = model;
+    } else {
+      quizModel.value.data?.data?.addAll(model.data?.data ?? []);
+      quizModel.value.data?.quizInfo = model.data?.quizInfo ?? quizModel.value.data?.quizInfo;
+      quizModel.value.count = model.count;
+      quizModel.refresh();
+    }
+  }
+
   //clear Models
   void clearMeModel() => meModel.value = MeModel();
   void clearSubjectModel() => subjectModel.value = SubjectModel();
   void clearSubjectCatModel() => subjectCatModel.value = SubjectModel();
   void clearGradeModel() => gradeModel.value = GradeModel();
   void clearPresentationModel() => presentationModel.value = PresentationModel();
-  void clearQuizModel() => quizModel.value = QuizModel();
+  void clearQuizModel() {
+    quizModel.value = QuizModel();
+    quizOffset.value = 0;
+    quizHasMore.value = true;
+    isLoadingMore.value = false;
+  }
   void clearTestListModel() => testListModel.value = TestListModel();
 
   //Function to get the screen size

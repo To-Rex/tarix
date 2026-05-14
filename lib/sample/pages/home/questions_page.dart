@@ -49,7 +49,18 @@ class QuestionsPage extends StatelessWidget {
           ),
         ),
 
-        body: RefreshComponent(
+        body: NotificationListener<ScrollNotification>(
+            onNotification: (notification) {
+              if (notification is ScrollEndNotification) {
+                if (notification.metrics.pixels >= notification.metrics.maxScrollExtent - 200) {
+                  if (!_getController.isLoadingMore.value && _getController.quizHasMore.value) {
+                    ApiController().getQuiz(sId, isLoadMore: true);
+                  }
+                }
+              }
+              return false;
+            },
+            child: RefreshComponent(
             color: AppColors.black,
             scrollController: _getController.scrollQuestionsController,
             physics: const ClampingScrollPhysics(),
@@ -60,12 +71,15 @@ class QuestionsPage extends StatelessWidget {
             child: Obx(() => _getController.quizModel.value.data != null
                 ? _getController.quizModel.value.data!.data!.isNotEmpty
                 ? ListView.builder(
-              itemCount: (_getController.quizModel.value.data?.data?.length ?? 0) + (_getController.quizModel.value.data?.quizInfo?.paid == false ? 1 : 0),
+              itemCount: (_getController.quizModel.value.data?.data?.length ?? 0) + (_getController.quizModel.value.data?.quizInfo?.paid == false ? 1 : 0) + (_getController.isLoadingMore.value ? 1 : 0),
               shrinkWrap: true,
               padding: EdgeInsets.only(bottom: 45.h),
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
-                if (index == (_getController.quizModel.value.data?.data!.length ?? 0) && _getController.quizModel.value.data?.quizInfo?.paid == false) {
+                final dataLength = _getController.quizModel.value.data?.data?.length ?? 0;
+                final showPaymentBanner = _getController.quizModel.value.data?.quizInfo?.paid == false;
+
+                if (showPaymentBanner && index == dataLength) {
                   return Container(
                       padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
                       margin: EdgeInsets.only(bottom: 40.h, left: 15.w, right: 15.w, top: 18.h),
@@ -75,7 +89,7 @@ class QuestionsPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             TextSmall(
-                                text: 'Barcha imkoniyatlardan foydalanish uchun ilovaning to\u2019liq versiyasini sotib oling',
+                                text: 'Barcha imkoniyatlardan foydalanish uchun ilovaning to‘liq versiyasini sotib oling',
                                 color: AppColors.white,
                                 fontSize: 20.sp,
                                 fontWeight: FontWeight.w500,
@@ -85,7 +99,7 @@ class QuestionsPage extends StatelessWidget {
                             const Divider(color: AppColors.white, thickness: 1),
                             SizedBox(height: 5.h),
                             TextSmall(
-                                text: '${'To\u2019lov miqdori'.tr}: ${_getController.meModel.value.data?.appPrice ?? 0} ${'so\u2019m'.tr}',
+                                text: '${'To‘lov miqdori'.tr}: ${_getController.meModel.value.data?.appPrice ?? 0} ${'so\u2019m'.tr}',
                                 color: AppColors.white,
                                 fontSize: 20.sp,
                                 fontWeight: FontWeight.w500,
@@ -124,6 +138,12 @@ class QuestionsPage extends StatelessWidget {
                       )
                   );
                 }
+                if (_getController.isLoadingMore.value && index == dataLength + (showPaymentBanner ? 1 : 0)) {
+                  return const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16),
+                    child: Center(child: CircularProgressIndicator(color: AppColors.black)),
+                  );
+                }
                 final dataIndex = index ;
                 return Container(
                   padding: EdgeInsets.symmetric(horizontal: 15.w),
@@ -143,7 +163,7 @@ class QuestionsPage extends StatelessWidget {
                 constraints: BoxConstraints(minHeight: Get.height - 200.h),
                 decoration:  BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r))),
                 alignment: Alignment.center,
-                child: TextSmall(text: 'Ma\u2019lumotlar yo\u2019q', color: AppColors.black, fontSize: 16.sp, fontWeight: FontWeight.w500))
+                child: TextSmall(text: 'Ma’lumotlar yo’q', color: AppColors.black, fontSize: 16.sp, fontWeight: FontWeight.w500))
                 : ListView.builder(
                 itemCount: 10,
                 shrinkWrap: true,
@@ -151,6 +171,7 @@ class QuestionsPage extends StatelessWidget {
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) => Container(padding: EdgeInsets.symmetric(horizontal: 15.w), child: Skeletonizer(child: QuizItem(sId: '92nsakskqskoqs', index: index, question: 'Question', answer: 'Answer')))))
         )
+    )
     );
   }
 }
