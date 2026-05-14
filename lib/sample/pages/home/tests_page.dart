@@ -5,6 +5,7 @@ import 'package:skeletonizer/skeletonizer.dart';
 import 'package:history/sample/pages/home/test_detail.dart';
 import '../../../companents/filds/text_small.dart';
 import '../../../companents/refresh_component.dart';
+import '../../../companents/settings/instrument_components.dart';
 import '../../../controllers/api_controller.dart';
 import '../../../controllers/get_controller.dart';
 import '../../../resource/app_colors.dart';
@@ -98,56 +99,60 @@ class TestsPage extends StatelessWidget {
                         margin: EdgeInsets.only(bottom: 14.h, top: 20.h),
                         child: ElevatedButton(
                             onPressed: () {
-                              Get.dialog(
-                                Dialog(
-                                  backgroundColor: AppColors.white,
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
-                                  child: Padding(
-                                    padding: EdgeInsets.all(20.w),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        TextSmall(text: 'Testni boshlaysizmi?', color: AppColors.black, fontSize: 20.sp, fontWeight: FontWeight.bold),
-                                        SizedBox(height: 12.h),
-                                        TextSmall(text: 'Test boshlangandan so‘ng belgilangan vaqt boshlanadi', color: AppColors.grey3, fontSize: 16.sp, fontWeight: FontWeight.w400, textAlign: TextAlign.start, maxLines: 3),
-                                        SizedBox(height: 24.h),
-                                        Row(
-                                          children: [
-                                            Expanded(
-                                              child: OutlinedButton(
-                                                onPressed: () => Get.back(),
-                                                style: OutlinedButton.styleFrom(
-                                                  padding: EdgeInsets.symmetric(vertical: 12.h),
-                                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
-                                                  side: const BorderSide(color: AppColors.grey5),
+                              if (test.isFree == true) {
+                                Get.dialog(
+                                  Dialog(
+                                    backgroundColor: AppColors.white,
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
+                                    child: Padding(
+                                      padding: EdgeInsets.all(20.w),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          TextSmall(text: 'Testni boshlaysizmi?', color: AppColors.black, fontSize: 20.sp, fontWeight: FontWeight.bold),
+                                          SizedBox(height: 12.h),
+                                          TextSmall(text: 'Test boshlangandan so‘ng belgilangan vaqt boshlanadi', color: AppColors.grey3, fontSize: 16.sp, fontWeight: FontWeight.w400, textAlign: TextAlign.start, maxLines: 3),
+                                          SizedBox(height: 24.h),
+                                          Row(
+                                            children: [
+                                              Expanded(
+                                                child: OutlinedButton(
+                                                  onPressed: () => Get.back(),
+                                                  style: OutlinedButton.styleFrom(
+                                                    padding: EdgeInsets.symmetric(vertical: 12.h),
+                                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+                                                    side: const BorderSide(color: AppColors.grey5),
+                                                  ),
+                                                  child: TextSmall(text: 'Bekor qilish', color: AppColors.grey3, fontSize: 18.sp),
                                                 ),
-                                                child: TextSmall(text: 'Bekor qilish', color: AppColors.grey3, fontSize: 18.sp),
                                               ),
-                                            ),
-                                            SizedBox(width: 12.w),
-                                            Expanded(
-                                              child: ElevatedButton(
-                                                onPressed: () {
-                                                  Get.back();
-                                                  Get.to(() => TestDetail(title: test.title ?? title, sId: test.sId ?? '', minutes: test.minutes ?? 59));
-                                                },
-                                                style: ElevatedButton.styleFrom(
-                                                  elevation: 0,
-                                                  backgroundColor: AppColors.primaryColor,
-                                                  padding: EdgeInsets.symmetric(vertical: 12.h),
-                                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+                                              SizedBox(width: 12.w),
+                                              Expanded(
+                                                child: ElevatedButton(
+                                                  onPressed: () {
+                                                    Get.back();
+                                                    Get.to(() => TestDetail(title: test.title ?? title, sId: test.sId ?? '', minutes: test.minutes ?? 59));
+                                                  },
+                                                  style: ElevatedButton.styleFrom(
+                                                    elevation: 0,
+                                                    backgroundColor: AppColors.primaryColor,
+                                                    padding: EdgeInsets.symmetric(vertical: 12.h),
+                                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+                                                  ),
+                                                  child: TextSmall(text: 'Boshlash', color: AppColors.white, fontSize: 18.sp),
                                                 ),
-                                                child: TextSmall(text: 'Boshlash', color: AppColors.white, fontSize: 18.sp),
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                              );
+                                );
+                              } else {
+                                InstrumentComponents().bottomSheetPayment();
+                              }
                             },
                             style: ElevatedButton.styleFrom(
                                 elevation: 0,
@@ -155,11 +160,18 @@ class TestsPage extends StatelessWidget {
                                 padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 12.h),
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r))
                             ),
-                            child: TextSmall(
-                                text: 'Testni boshlash',
-                                color: AppColors.white,
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.bold
+                            child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  if (test.isFree != true) Icon(Icons.lock, color: AppColors.white, size: 20.sp),
+                                  if (test.isFree != true) SizedBox(width: 6.w),
+                                  TextSmall(
+                                      text: 'Testni boshlash',
+                                      color: AppColors.white,
+                                      fontSize: 18.sp,
+                                      fontWeight: FontWeight.bold
+                                  ),
+                                ]
                             )
                         ),
                       )
