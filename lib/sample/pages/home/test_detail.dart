@@ -131,7 +131,7 @@ class TestDetail extends StatelessWidget {
                             return RadioOption(
                               text: option.text,
                               value: option.value,
-                              groupValue: _controller.selectedAnswer.value,
+                              groupValue: _controller.selectedAnswers[_controller.currentQuestionIndex.value] ?? '',
                               onChanged: (value) => _controller.selectAnswer(value!),
                             );
                           }).toList(),

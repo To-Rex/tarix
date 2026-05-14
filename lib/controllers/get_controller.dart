@@ -28,8 +28,8 @@ class GetController extends GetxController {
   var widgetOptions = <Widget>[];
   final countdownDuration = const Duration(minutes: 1, seconds: 59).obs;
   final currentQuestionIndex = 0.obs;
-  // Tanlangan javob
-  final selectedAnswer = ''.obs;
+  // Tanlangan javoblar (savol index => tanlangan qiymat)
+  final selectedAnswers = <int, String>{}.obs;
   // Savollar ro'yxati (masalan, API dan keladi)
   final questions = <QuestionModel>[].obs;
   // Taymer
@@ -112,7 +112,7 @@ class GetController extends GetxController {
   void changeQuestions(List<QuestionModel> newQuestions) {
     questions.value = newQuestions;
     currentQuestionIndex.value = 0;
-    selectedAnswer.value = '';
+    selectedAnswers.clear();
     seconds = 3551;
     timerText.value = '59:11';
     startTimer();
@@ -133,27 +133,24 @@ class GetController extends GetxController {
   }
 
   void selectAnswer(String value) {
-    selectedAnswer.value = value;
+    selectedAnswers[currentQuestionIndex.value] = value;
   }
 
   void nextQuestion() {
     if (currentQuestionIndex.value < questions.length - 1) {
       currentQuestionIndex.value++;
-      selectedAnswer.value = '';
     }
   }
 
   void previousQuestion() {
     if (currentQuestionIndex.value > 0) {
       currentQuestionIndex.value--;
-      selectedAnswer.value = '';
     }
   }
 
   void goToQuestion(int index) {
     if (index >= 0 && index < questions.length) {
       currentQuestionIndex.value = index;
-      selectedAnswer.value = '';
     }
   }
 
