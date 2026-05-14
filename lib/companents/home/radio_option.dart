@@ -36,30 +36,35 @@ class RadioOption extends StatelessWidget {
 class QuestionNumber extends StatelessWidget {
   final String number;
   final bool isActive;
+  final VoidCallback? onTap;
 
   const QuestionNumber({
     super.key,
     required this.number,
     this.isActive = false,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
-      height: 50.w,
-      width: 50.w,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: isActive ? AppColors.lightGreen : AppColors.white,
-        borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(color: AppColors.grey, width: 1.w),
-      ),
-      child: TextSmall(
-        text: number,
-        color: isActive ? AppColors.white : AppColors.black,
-        fontSize: 18.sp,
-        fontWeight: FontWeight.w500,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
+        height: 50.w,
+        width: 50.w,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: isActive ? AppColors.lightGreen : AppColors.white,
+          borderRadius: BorderRadius.circular(12.r),
+          border: Border.all(color: AppColors.grey, width: 1.w),
+        ),
+        child: TextSmall(
+          text: number,
+          color: isActive ? AppColors.white : AppColors.black,
+          fontSize: 18.sp,
+          fontWeight: FontWeight.w500,
+        ),
       ),
     );
   }

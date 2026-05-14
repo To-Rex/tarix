@@ -3,20 +3,33 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../companents/filds/text_small.dart';
 import '../../../companents/home/radio_option.dart';
+import '../../../controllers/api_controller.dart';
 import '../../../controllers/get_controller.dart';
 import '../../../resource/app_colors.dart';
 
 class TestDetail extends StatelessWidget {
   final String title;
+  final String sId;
   final GetController _controller = Get.put(GetController());
 
-  TestDetail({super.key, required this.title});
+  TestDetail({super.key, required this.title, required this.sId});
 
   @override
   Widget build(BuildContext context) {
+    if (_controller.questions.isEmpty && !_controller.isTestLoading.value) {
+      ApiController().startTest(sId);
+    }
+
     return Scaffold(
       backgroundColor: AppColors.white,
-      body: Container(
+      body: Obx(() {
+        if (_controller.questions.isEmpty) {
+          return Center(
+            child: CircularProgressIndicator(color: AppColors.primaryColor),
+          );
+        }
+
+        return Container(
         width: 1.sw,
         height: 1.sh,
         margin: EdgeInsets.only(top: 65.h, left: 15.w, right: 15.w, bottom: 50.h),
@@ -24,8 +37,7 @@ class TestDetail extends StatelessWidget {
           borderRadius: BorderRadius.circular(16.r),
           border: Border.all(color: AppColors.grey, width: 1.w),
         ),
-        child: Obx(
-              () => Column(
+        child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -196,22 +208,28 @@ class TestDetail extends StatelessWidget {
                     topRight: Radius.circular(15.r),
                   ),
                 ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: _controller.questions.asMap().entries.map((entry) {
-                    final index = entry.key;
-                    return QuestionNumber(
-                      number: '${index + 1}',
-                      isActive: _controller.currentQuestionIndex.value == index,
-                    );
-                  }).toList(),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: _controller.questions.asMap().entries.map((entry) {
+                      final index = entry.key;
+                      return Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 4.w),
+                        child: QuestionNumber(
+                          number: '${index + 1}',
+                          isActive: _controller.currentQuestionIndex.value == index,
+                          onTap: () => _controller.goToQuestion(index),
+                        ),
+                      );
+                    }).toList(),
+                  ),
                 ),
               ),
             ],
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 }

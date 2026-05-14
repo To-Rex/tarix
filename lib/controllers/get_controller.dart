@@ -35,7 +35,8 @@ class GetController extends GetxController {
   // Taymer
   final timerText = '59:11'.obs;
   int seconds = 3551; // 59 daqiqa 11 sekund
-  late Timer _timer;
+  Timer? _timer;
+  RxBool isTestLoading = false.obs;
 
   final ScrollController  scrollController = ScrollController();
   final ScrollController  scrollDetailController = ScrollController();
@@ -106,28 +107,19 @@ class GetController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // Savollarni yuklash
-    questions.addAll([
-      QuestionModel(
-        id: '1',
-        text: 'Neandertal odamining qoldiqlari ... dan topilgan.',
-        options: [
-          OptionModel(text: 'A. Fransiya', value: 'A', isCorrect: true),
-          OptionModel(text: 'B. Avstriya', value: 'B', isCorrect: false),
-          OptionModel(text: 'C. Indoneziya', value: 'C', isCorrect: false),
-          OptionModel(text: 'D. Germaniya', value: 'D', isCorrect: false),
-        ],
-      ),
-      // Qo'shimcha savollar uchun placeholder
-      QuestionModel(id: '2', text: 'Savol 2', options: []),
-      QuestionModel(id: '3', text: 'Savol 3', options: []),
-      QuestionModel(id: '4', text: 'Savol 4', options: []),
-      QuestionModel(id: '5', text: 'Savol 5', options: []),
-      QuestionModel(id: '6', text: 'Savol 6', options: []),
-      QuestionModel(id: '7', text: 'Savol 7', options: []),
-    ]);
+  }
 
-    // Taymerni ishga tushirish
+  void changeQuestions(List<QuestionModel> newQuestions) {
+    questions.value = newQuestions;
+    currentQuestionIndex.value = 0;
+    selectedAnswer.value = '';
+    seconds = 3551;
+    timerText.value = '59:11';
+    startTimer();
+  }
+
+  void startTimer() {
+    _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       seconds--;
       final minutes = seconds ~/ 60;
@@ -158,8 +150,15 @@ class GetController extends GetxController {
     }
   }
 
+  void goToQuestion(int index) {
+    if (index >= 0 && index < questions.length) {
+      currentQuestionIndex.value = index;
+      selectedAnswer.value = '';
+    }
+  }
+
   void finishTest() {
-    _timer.cancel();
+    _timer?.cancel();
     //InstrumentComponents().shoeToast(title, message, isError, duration)
     InstrumentComponents().shoeToast('Test yakunlandi'.tr, 'Tabriklaymiz! Siz testni yakunladingiz. Natijalar saqlandi'.tr, false, 3);
     // Natijalarni saqlash yoki boshqa sahifaga o'tish
@@ -167,7 +166,7 @@ class GetController extends GetxController {
 
   @override
   void onClose() {
-    _timer.cancel();
+    _timer?.cancel();
     super.onClose();
   }
 

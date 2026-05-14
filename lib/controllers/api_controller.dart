@@ -12,6 +12,7 @@ import '../models/grade_model.dart';
 import '../models/me_model.dart';
 import '../models/payment_history.dart';
 import '../models/presentation_model.dart';
+import '../models/question_model.dart';
 import '../models/quiz_model.dart';
 import '../models/subject_model.dart';
 import '../models/test_list_model.dart';
@@ -330,6 +331,33 @@ class ApiController extends GetxController {
       }
     } catch (e) {
       print(e);
+    }
+  }
+
+  Future<void> startTest(String testId) async {
+    try {
+      _getController.isTestLoading.value = true;
+      final response = await http.get(
+        Uri.parse('$baseUrl/mobile/test/$testId/start'),
+        headers: headersBearer(),
+      );
+      debugPrint(response.body);
+      debugPrint(response.statusCode.toString());
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final data = jsonDecode(response.body);
+        debugPrint(data.toString());
+        final questions = (data['data']['questions'] as List)
+            .map((q) => QuestionModel.fromApiJson(q))
+            .toList();
+        _getController.changeQuestions(questions);
+      } else {
+        print('=====================================================Xa otam nima bo`lyapti');
+        Get.snackbar('Xatolik', 'Test ma\'lumotlarini yuklashda xatolik', snackPosition: SnackPosition.BOTTOM);
+      }
+    } catch (e) {
+      print(e);
+    } finally {
+      _getController.isTestLoading.value = false;
     }
   }
 

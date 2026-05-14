@@ -98,7 +98,7 @@ class TestsPage extends StatelessWidget {
                         margin: EdgeInsets.only(bottom: 14.h, top: 20.h),
                         child: ElevatedButton(
                             onPressed: () {
-                              Get.to(() => TestDetail(title: test.title ?? title));
+                              Get.to(() => TestDetail(title: test.title ?? title, sId: test.sId ?? ''));
                             },
                             style: ElevatedButton.styleFrom(
                                 elevation: 0,
