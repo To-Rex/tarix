@@ -7,19 +7,29 @@ import '../../../controllers/api_controller.dart';
 import '../../../controllers/get_controller.dart';
 import '../../../resource/app_colors.dart';
 
-class TestDetail extends StatelessWidget {
+class TestDetail extends StatefulWidget {
   final String title;
   final String sId;
-  final GetController _controller = Get.put(GetController());
 
   TestDetail({super.key, required this.title, required this.sId});
 
   @override
-  Widget build(BuildContext context) {
-    if (_controller.questions.isEmpty && !_controller.isTestLoading.value) {
-      ApiController().startTest(sId);
-    }
+  State<TestDetail> createState() => _TestDetailState();
+}
 
+class _TestDetailState extends State<TestDetail> {
+  late final GetController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = Get.put(GetController());
+    _controller.resetTest();
+    ApiController().startTest(widget.sId);
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
       body: Obx(() {
@@ -150,7 +160,7 @@ class TestDetail extends StatelessWidget {
                                 padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
                                 alignment: Alignment.center,
                                 backgroundColor: AppColors.white,
-                                side: BorderSide(color: AppColors.grey, width: 1.w), // Chegara rangi va qalinligi
+                                side: BorderSide(color: AppColors.grey, width: 1.w),
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(12.r))),
                               ),
                               onPressed: _controller.previousQuestion,

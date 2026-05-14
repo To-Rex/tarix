@@ -109,6 +109,17 @@ class GetController extends GetxController {
     super.onInit();
   }
 
+  void resetTest() {
+    _timer?.cancel();
+    _timer = null;
+    questions.clear();
+    selectedAnswers.clear();
+    currentQuestionIndex.value = 0;
+    seconds = 3551;
+    timerText.value = '59:11';
+    isTestLoading.value = false;
+  }
+
   void changeQuestions(List<QuestionModel> newQuestions) {
     questions.value = newQuestions;
     currentQuestionIndex.value = 0;
