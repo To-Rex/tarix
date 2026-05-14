@@ -14,6 +14,7 @@ import '../models/payment_history.dart';
 import '../models/presentation_model.dart';
 import '../models/quiz_model.dart';
 import '../models/subject_model.dart';
+import '../models/test_list_model.dart';
 import '../sample/pages/error_page.dart';
 import '../sample/sample_page.dart';
 import 'get_controller.dart';
@@ -283,6 +284,28 @@ class ApiController extends GetxController {
       }
     } catch (e) {
       print('suuu');
+      print(e);
+    }
+  }
+
+  //mobile/test/list
+  Future<void> getTestList() async {
+    try {
+      final response = await http.get(
+        Uri.parse('$baseUrl/mobile/test/list'),
+        headers: headersBearer(),
+      );
+      debugPrint(response.body);
+      debugPrint(response.statusCode.toString());
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final data = jsonDecode(response.body);
+        debugPrint(data.toString());
+        _getController.changeTestListModel(TestListModel.fromJson(data));
+      } else {
+        print('=====================================================Xa otam nima bo`lyapti');
+        Get.snackbar('Xatolik', 'Email yoki parol xato', snackPosition: SnackPosition.BOTTOM);
+      }
+    } catch (e) {
       print(e);
     }
   }

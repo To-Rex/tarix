@@ -15,6 +15,7 @@ import '../models/presentation_model.dart';
 import '../models/question_model.dart';
 import '../models/quiz_model.dart';
 import '../models/subject_model.dart';
+import '../models/test_list_model.dart';
 import '../sample/auth/login_page.dart';
 
 class GetController extends GetxController {
@@ -56,6 +57,7 @@ class GetController extends GetxController {
   var quizModel = QuizModel().obs;
   var appInfoModel = AppInfoModel().obs;
   var paymentHistory = PaymentHistory().obs;
+  var testListModel = TestListModel().obs;
 
   //change Models
   void changeMeModel(MeModel model) => meModel.value = model;
@@ -66,6 +68,7 @@ class GetController extends GetxController {
   void changeQuizModel(QuizModel model) => quizModel.value = model;
   void changeAppInfoModel(AppInfoModel model) => appInfoModel.value = model;
   void changePaymentModel(PaymentHistory model) => paymentHistory.value = model;
+  void changeTestListModel(TestListModel model) => testListModel.value = model;
 
 
   //clear Models
@@ -75,6 +78,7 @@ class GetController extends GetxController {
   void clearGradeModel() => gradeModel.value = GradeModel();
   void clearPresentationModel() => presentationModel.value = PresentationModel();
   void clearQuizModel() => quizModel.value = QuizModel();
+  void clearTestListModel() => testListModel.value = TestListModel();
 
   //Function to get the screen size
   //---------------------------------------------------------------------------------------------------------------------------------

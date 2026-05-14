@@ -58,7 +58,7 @@ class SubjectItem extends StatelessWidget {
                               ? PresentationPage(title: title, sId: sId, type: type, isGrade: false)
                               : ClassesPage(title: title, sId: sId, type: type));
                         } else {
-                          Get.to(() => TestsPage(title: title));
+                          Get.to(() => TestsPage(title: title, sId: sId));
                         }
                       },
                       style: ElevatedButton.styleFrom(
