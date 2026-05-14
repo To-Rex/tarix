@@ -19,15 +19,29 @@ class RadioOption extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RadioMenuButton(
-      value: value,
-      groupValue: groupValue,
-      onChanged: onChanged,
-      child: TextSmall(
-        text: text,
-        color: AppColors.black,
-        fontSize: 18.sp,
-        fontWeight: FontWeight.w500,
+    return InkWell(
+      onTap: () => onChanged(value),
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 4.h),
+        child: Row(
+          children: [
+            Radio<String>(
+              value: value,
+              groupValue: groupValue,
+              onChanged: onChanged,
+              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            ),
+            Expanded(
+              child: TextSmall(
+                text: text,
+                color: AppColors.black,
+                fontSize: 18.sp,
+                fontWeight: FontWeight.w500,
+                maxLines: 10,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -39,7 +39,7 @@ class TestDetail extends StatelessWidget {
         ),
         child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SizedBox(height: 5.sp),
               // Top Bar (Timer and Finish Button)
@@ -103,12 +103,12 @@ class TestDetail extends StatelessWidget {
                   width: 1.sw,
                   padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       // Question Content
                       Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           TextSmall(
                             text: '№${_controller.currentQuestionIndex.value + 1}',
