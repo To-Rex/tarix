@@ -219,6 +219,7 @@ class TestDetail extends StatelessWidget {
                         child: QuestionNumber(
                           number: '${index + 1}',
                           isActive: _controller.currentQuestionIndex.value == index,
+                          isAnswered: _controller.selectedAnswers.containsKey(index),
                           onTap: () => _controller.goToQuestion(index),
                         ),
                       );

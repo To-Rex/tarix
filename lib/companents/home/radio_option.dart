@@ -36,12 +36,14 @@ class RadioOption extends StatelessWidget {
 class QuestionNumber extends StatelessWidget {
   final String number;
   final bool isActive;
+  final bool isAnswered;
   final VoidCallback? onTap;
 
   const QuestionNumber({
     super.key,
     required this.number,
     this.isActive = false,
+    this.isAnswered = false,
     this.onTap,
   });
 
@@ -55,13 +57,13 @@ class QuestionNumber extends StatelessWidget {
         width: 50.w,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: isActive ? AppColors.lightGreen : AppColors.white,
+          color: isActive ? AppColors.lightGreen : (isAnswered ? AppColors.lightGreen2 : AppColors.white),
           borderRadius: BorderRadius.circular(12.r),
           border: Border.all(color: AppColors.grey, width: 1.w),
         ),
         child: TextSmall(
           text: number,
-          color: isActive ? AppColors.white : AppColors.black,
+          color: isActive || isAnswered ? AppColors.white : AppColors.black,
           fontSize: 18.sp,
           fontWeight: FontWeight.w500,
         ),
