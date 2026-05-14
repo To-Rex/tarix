@@ -71,7 +71,7 @@ class QuestionsPage extends StatelessWidget {
             child: Obx(() => _getController.quizModel.value.data != null
                 ? _getController.quizModel.value.data!.data!.isNotEmpty
                 ? ListView.builder(
-              itemCount: (_getController.quizModel.value.data?.data?.length ?? 0) + (_getController.quizModel.value.data?.quizInfo?.paid == false ? 1 : 0) + (_getController.isLoadingMore.value ? 1 : 0),
+              itemCount: (_getController.quizModel.value.data?.data?.length ?? 0) + (_getController.quizModel.value.data?.quizInfo?.paid == false && !_getController.quizHasMore.value ? 1 : 0) + (_getController.isLoadingMore.value ? 1 : 0),
               shrinkWrap: true,
               padding: EdgeInsets.only(bottom: 45.h),
               physics: const NeverScrollableScrollPhysics(),
@@ -79,7 +79,7 @@ class QuestionsPage extends StatelessWidget {
                 final dataLength = _getController.quizModel.value.data?.data?.length ?? 0;
                 final showPaymentBanner = _getController.quizModel.value.data?.quizInfo?.paid == false;
 
-                if (showPaymentBanner && index == dataLength) {
+                if (showPaymentBanner && !_getController.quizHasMore.value && index == dataLength) {
                   return Container(
                       padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
                       margin: EdgeInsets.only(bottom: 40.h, left: 15.w, right: 15.w, top: 18.h),
@@ -138,7 +138,7 @@ class QuestionsPage extends StatelessWidget {
                       )
                   );
                 }
-                if (_getController.isLoadingMore.value && index == dataLength + (showPaymentBanner ? 1 : 0)) {
+                if (_getController.isLoadingMore.value && index == dataLength + (showPaymentBanner && !_getController.quizHasMore.value ? 1 : 0)) {
                   return const Padding(
                     padding: EdgeInsets.symmetric(vertical: 16),
                     child: Center(child: CircularProgressIndicator(color: AppColors.black)),
