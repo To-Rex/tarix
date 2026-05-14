@@ -10,8 +10,9 @@ import '../../../resource/app_colors.dart';
 class TestDetail extends StatefulWidget {
   final String title;
   final String sId;
+  final int minutes;
 
-  TestDetail({super.key, required this.title, required this.sId});
+  TestDetail({super.key, required this.title, required this.sId, this.minutes = 59});
 
   @override
   State<TestDetail> createState() => _TestDetailState();
@@ -24,7 +25,7 @@ class _TestDetailState extends State<TestDetail> {
   void initState() {
     super.initState();
     _controller = Get.put(GetController());
-    _controller.resetTest();
+    _controller.resetTest(minutes: widget.minutes);
     ApiController().startTest(widget.sId);
   }
 

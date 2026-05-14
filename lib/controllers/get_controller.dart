@@ -109,14 +109,14 @@ class GetController extends GetxController {
     super.onInit();
   }
 
-  void resetTest() {
+  void resetTest({int minutes = 59}) {
     _timer?.cancel();
     _timer = null;
     questions.clear();
     selectedAnswers.clear();
     currentQuestionIndex.value = 0;
-    seconds = 3551;
-    timerText.value = '59:11';
+    seconds = minutes * 60;
+    timerText.value = '${minutes.toString().padLeft(2, '0')}:00';
     isTestLoading.value = false;
   }
 
@@ -124,8 +124,6 @@ class GetController extends GetxController {
     questions.value = newQuestions;
     currentQuestionIndex.value = 0;
     selectedAnswers.clear();
-    seconds = 3551;
-    timerText.value = '59:11';
     startTimer();
     scrollToCurrentQuestion();
   }
