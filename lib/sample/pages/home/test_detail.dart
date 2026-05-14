@@ -96,7 +96,7 @@ class _TestDetailState extends State<TestDetail> {
                         padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 13.h),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(12.r))),
                       ),
-                      onPressed: _controller.finishTest,
+                      onPressed: () => _controller.finishTest(title: widget.title),
                       child: TextSmall(
                         text: 'Yakunlash',
                         color: AppColors.white,

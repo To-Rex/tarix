@@ -6,7 +6,6 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import '../bottombar/home_page.dart';
 import '../bottombar/settings_page.dart';
-import '../companents/settings/instrument_components.dart';
 import '../models/app_info_model.dart';
 import '../models/grade_model.dart';
 import '../models/me_model.dart';
@@ -17,6 +16,7 @@ import '../models/quiz_model.dart';
 import '../models/subject_model.dart';
 import '../models/test_list_model.dart';
 import '../sample/auth/login_page.dart';
+import '../sample/pages/home/test_result_page.dart';
 
 class GetController extends GetxController {
   var height = 0.0.obs;
@@ -184,11 +184,26 @@ class GetController extends GetxController {
     }
   }
 
-  void finishTest() {
+  void finishTest({String title = ''}) {
     _timer?.cancel();
-    //InstrumentComponents().shoeToast(title, message, isError, duration)
-    InstrumentComponents().shoeToast('Test yakunlandi'.tr, 'Tabriklaymiz! Siz testni yakunladingiz. Natijalar saqlandi'.tr, false, 3);
-    // Natijalarni saqlash yoki boshqa sahifaga o'tish
+    int correctCount = 0;
+    for (int i = 0; i < questions.length; i++) {
+      final selected = selectedAnswers[i];
+      if (selected != null) {
+        final correctOption = questions[i].options.where((o) => o.isCorrect).toList();
+        if (correctOption.isNotEmpty && correctOption.first.value == selected) {
+          correctCount++;
+        }
+      }
+    }
+    Get.to(() => TestResultPage(
+      title: title,
+      questions: questions.toList(),
+      selectedAnswers: Map.from(selectedAnswers),
+      correctCount: correctCount,
+      totalCount: questions.length,
+      elapsedTime: timerText.value,
+    ));
   }
 
   @override
