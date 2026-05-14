@@ -18,6 +18,7 @@ class TestsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('Subject ID: $sId');
     _getController.clearTestListModel();
     ApiController().getTestList();
     return Scaffold(
@@ -36,15 +37,18 @@ class TestsPage extends StatelessWidget {
           _getController.clearTestListModel();
           await ApiController().getTestList();
         },
-        child: Obx(() => _getController.testListModel.value.data != null
-            ? _getController.testListModel.value.data!.isNotEmpty
-            ? ListView.builder(
-            itemCount: _getController.testListModel.value.data!.length,
+        child: Obx(() {
+          final allData = _getController.testListModel.value.data;
+          final filteredData = allData?.where((item) => item.subjectCategory == sId).toList();
+          return allData != null
+              ? filteredData!.isNotEmpty
+              ? ListView.builder(
+            itemCount: filteredData.length,
             shrinkWrap: true,
             padding: EdgeInsets.only(bottom: 150.h),
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
-              final test = _getController.testListModel.value.data![index];
+              final test = filteredData[index];
               return Container(
                 width: 1.sw,
                 margin: EdgeInsets.only(top: 16.h, left: 15.w, right: 15.w),
@@ -203,9 +207,9 @@ class TestsPage extends StatelessWidget {
                       )
                     ]
                 ),
-            ))
-        )
+            )));
+        })
       ),
-    ));
+    );
   }
 }
