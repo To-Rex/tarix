@@ -12,7 +12,7 @@ class TestDetail extends StatefulWidget {
   final String sId;
   final int minutes;
 
-  TestDetail({super.key, required this.title, required this.sId, this.minutes = 59});
+  const TestDetail({super.key, required this.title, required this.sId, this.minutes = 59});
 
   @override
   State<TestDetail> createState() => _TestDetailState();

@@ -98,7 +98,56 @@ class TestsPage extends StatelessWidget {
                         margin: EdgeInsets.only(bottom: 14.h, top: 20.h),
                         child: ElevatedButton(
                             onPressed: () {
-                              Get.to(() => TestDetail(title: test.title ?? title, sId: test.sId ?? '', minutes: test.minutes ?? 59));
+                              Get.dialog(
+                                Dialog(
+                                  backgroundColor: AppColors.white,
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(20.w),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        TextSmall(text: 'Testni boshlaysizmi?', color: AppColors.black, fontSize: 20.sp, fontWeight: FontWeight.bold),
+                                        SizedBox(height: 12.h),
+                                        TextSmall(text: 'Test boshlangandan so‘ng belgilangan vaqt boshlanadi', color: AppColors.grey3, fontSize: 16.sp, fontWeight: FontWeight.w400, textAlign: TextAlign.start, maxLines: 3),
+                                        SizedBox(height: 24.h),
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              child: OutlinedButton(
+                                                onPressed: () => Get.back(),
+                                                style: OutlinedButton.styleFrom(
+                                                  padding: EdgeInsets.symmetric(vertical: 12.h),
+                                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+                                                  side: const BorderSide(color: AppColors.grey5),
+                                                ),
+                                                child: TextSmall(text: 'Bekor qilish', color: AppColors.grey3, fontSize: 18.sp),
+                                              ),
+                                            ),
+                                            SizedBox(width: 12.w),
+                                            Expanded(
+                                              child: ElevatedButton(
+                                                onPressed: () {
+                                                  Get.back();
+                                                  Get.to(() => TestDetail(title: test.title ?? title, sId: test.sId ?? '', minutes: test.minutes ?? 59));
+                                                },
+                                                style: ElevatedButton.styleFrom(
+                                                  elevation: 0,
+                                                  backgroundColor: AppColors.primaryColor,
+                                                  padding: EdgeInsets.symmetric(vertical: 12.h),
+                                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+                                                ),
+                                                child: TextSmall(text: 'Boshlash', color: AppColors.white, fontSize: 18.sp),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
                             },
                             style: ElevatedButton.styleFrom(
                                 elevation: 0,
