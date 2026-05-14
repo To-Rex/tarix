@@ -116,6 +116,7 @@ class GetController extends GetxController {
     seconds = 3551;
     timerText.value = '59:11';
     startTimer();
+    scrollToCurrentQuestion();
   }
 
   void startTimer() {
@@ -136,21 +137,41 @@ class GetController extends GetxController {
     selectedAnswers[currentQuestionIndex.value] = value;
   }
 
+  void scrollToCurrentQuestion() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (scrollQuestionsController.hasClients && questions.length > 1) {
+        final maxScroll = scrollQuestionsController.position.maxScrollExtent;
+        final viewportWidth = scrollQuestionsController.position.viewportDimension;
+        final totalWidth = maxScroll + viewportWidth;
+        final itemWidth = totalWidth / questions.length;
+        final centerOffset = (currentQuestionIndex.value * itemWidth) - (viewportWidth / 2 - itemWidth / 2);
+        scrollQuestionsController.animateTo(
+          centerOffset.clamp(0, maxScroll),
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+        );
+      }
+    });
+  }
+
   void nextQuestion() {
     if (currentQuestionIndex.value < questions.length - 1) {
       currentQuestionIndex.value++;
+      scrollToCurrentQuestion();
     }
   }
 
   void previousQuestion() {
     if (currentQuestionIndex.value > 0) {
       currentQuestionIndex.value--;
+      scrollToCurrentQuestion();
     }
   }
 
   void goToQuestion(int index) {
     if (index >= 0 && index < questions.length) {
       currentQuestionIndex.value = index;
+      scrollToCurrentQuestion();
     }
   }
 

@@ -210,6 +210,7 @@ class TestDetail extends StatelessWidget {
                 ),
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
+                  controller: _controller.scrollQuestionsController,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: _controller.questions.asMap().entries.map((entry) {

@@ -57,7 +57,7 @@ class QuestionNumber extends StatelessWidget {
         width: 50.w,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: isActive ? AppColors.lightGreen : (isAnswered ? AppColors.lightGreen2 : AppColors.white),
+          color: isActive ? AppColors.lightGreen : (isAnswered ? AppColors.primaryColor : AppColors.white),
           borderRadius: BorderRadius.circular(12.r),
           border: Border.all(color: AppColors.grey, width: 1.w),
         ),
