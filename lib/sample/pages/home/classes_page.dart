@@ -63,7 +63,7 @@ class ClassesPage extends StatelessWidget {
               constraints: BoxConstraints(minHeight: Get.height - 200.h),
               decoration:  BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r))),
               alignment: Alignment.center,
-              child: TextSmall(text: 'Ma\u2019lumotlar yo\u2019q', color: AppColors.black, fontSize: 16.sp, fontWeight: FontWeight.w500))
+              child: TextSmall(text: 'Ma’lumotlar yo’q', color: AppColors.black, fontSize: 16.sp, fontWeight: FontWeight.w500))
               : Skeletonizer(child: ListView.builder(
               itemCount: 10,
                 shrinkWrap: true,
