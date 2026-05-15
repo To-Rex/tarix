@@ -30,7 +30,7 @@ class HomePage extends StatelessWidget {
     return RefreshComponent(
       color: AppColors.black,
       scrollController: scrollHomeController,
-      physics: const AlwaysScrollableScrollPhysics(),
+      physics: const _BottomClampingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
       onRefresh: () async {
         _getController.clearSubjectModel();
         await ApiController().getSubject();
@@ -39,30 +39,33 @@ class HomePage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            width: 1.sw,
-            margin: EdgeInsets.only(top: isTablet ? 80.h : 70.h, left: isSmallScreen ? 10.w : 15.w, right: isSmallScreen ? 10.w : 15.w),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TextSmall(text: '${'Salom'.tr}, ${_getController.meModel.value.data?.doc?.fullName ?? ''} 👋', color: AppColors.black, fontSize: isTablet ? 20.sp : (isSmallScreen ? 20.sp : 24.sp), fontWeight: FontWeight.bold, maxLines: 1, overflow: TextOverflow.ellipsis),
-                      SizedBox(height: 3.h),
-                      TextSmall(text: 'Yangi bilimlarni o‘rganishga tayyormisiz?', color: AppColors.grey3, fontSize: isTablet ? 14.sp : (isSmallScreen ? 14.sp : 16.sp), fontWeight: FontWeight.w600, maxLines: 2)
-                    ]
+            color: AppColors.grey6,
+            padding: EdgeInsets.only(top: isTablet ? 80.h : 70.h),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: isSmallScreen ? 10.w : 15.w),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextSmall(text: '${'Salom'.tr}, ${_getController.meModel.value.data?.doc?.fullName ?? ''} 👋', color: AppColors.black, fontSize: isTablet ? 20.sp : (isSmallScreen ? 20.sp : 24.sp), fontWeight: FontWeight.bold, maxLines: 1, overflow: TextOverflow.ellipsis),
+                        SizedBox(height: 3.h),
+                        TextSmall(text: 'Yangi bilimlarni o‘rganishga tayyormisiz?', color: AppColors.grey3, fontSize: isTablet ? 14.sp : (isSmallScreen ? 14.sp : 16.sp), fontWeight: FontWeight.w600, maxLines: 2)
+                      ]
+                    )
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(left: isSmallScreen ? 5.w : 10.w),
+                    decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.circular(12.r), boxShadow: [if (isTablet)BoxShadow(color: Colors.black12, blurRadius: 4.r, offset: Offset(0, 2.h))]),
+                    child: IconButton(icon: Icon(FluentIcons.alert_24_regular, color: AppColors.black, size: isTablet ? 22.sp : (isSmallScreen ? 22.sp : 25.sp)), onPressed: () => Get.to(const NotificationPage()))
                   )
-                ),
-                Container(
-                  margin: EdgeInsets.only(left: isSmallScreen ? 5.w : 10.w),
-                  decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.circular(12.r), boxShadow: [if (isTablet)BoxShadow(color: Colors.black12, blurRadius: 4.r, offset: Offset(0, 2.h))]),
-                  child: IconButton(icon: Icon(FluentIcons.alert_24_regular, color: AppColors.black, size: isTablet ? 22.sp : (isSmallScreen ? 22.sp : 25.sp)), onPressed: () => Get.to(const NotificationPage()))
-                )
-              ]
-            )
+                ]
+              ),
+            ),
           ),
           Container(
             width: 1.sw,
@@ -89,5 +92,24 @@ class HomePage extends StatelessWidget {
         ]
       ))
     );
+  }
+}
+
+class _BottomClampingScrollPhysics extends ScrollPhysics {
+  const _BottomClampingScrollPhysics({super.parent});
+
+  @override
+  _BottomClampingScrollPhysics applyTo(ScrollPhysics? ancestor) {
+    return _BottomClampingScrollPhysics(parent: ancestor);
+  }
+
+  @override
+  double applyBoundaryConditions(ScrollMetrics position, double value) {
+    if (value > position.maxScrollExtent && position.pixels <= position.maxScrollExtent) {
+      final double overscroll = value - position.maxScrollExtent;
+      final double delta = value - position.pixels;
+      return overscroll.clamp(0.0, delta);
+    }
+    return super.applyBoundaryConditions(position, value);
   }
 }
