@@ -66,7 +66,7 @@ class HomePage extends StatelessWidget {
           ),
           Container(
             width: 1.sw,
-            margin: EdgeInsets.only(top: 18.h),
+            margin: EdgeInsets.only(top: 20.h),
             padding: EdgeInsets.symmetric(vertical: isSmallScreen ? 5.w : 10.w, horizontal: isTablet ? 20.w : (isSmallScreen ? 10.w : 15.w)),
             constraints: BoxConstraints(minHeight: Get.height - 200.h),
             decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(16.r), topRight: Radius.circular(16.r))),
@@ -84,7 +84,7 @@ class HomePage extends StatelessWidget {
                 }
                 return HomeItem(title: _getController.subjectModel.value.data![index].title.toString(), image: _getController.subjectModel.value.data![index].photo.toString(), index: index, sId: _getController.subjectModel.value.data![index].sId.toString());
               }
-            ) : Center(child: TextSmall(text: 'Ma\u2019lumotlar yo\u2019q', color: AppColors.black, fontSize: isTablet ? 14.sp : (isSmallScreen ? 14.sp : 16.sp), fontWeight: FontWeight.w500))
+            ) : Center(child: TextSmall(text: 'Ma’lumotlar yo’q', color: AppColors.black, fontSize: isTablet ? 14.sp : (isSmallScreen ? 14.sp : 16.sp), fontWeight: FontWeight.w500))
           )
         ]
       ))
