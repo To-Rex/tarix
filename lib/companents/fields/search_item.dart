@@ -35,7 +35,7 @@ class SearchItem extends StatelessWidget {
               isDense: true,
               contentPadding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
               border: InputBorder.none,
-              hintText: 'Qidirish',
+              hintText: 'Qidirish'.tr,
               hintStyle: TextStyle(color: AppColors.grey, fontSize: 16.sp),
               prefixIcon: Icon(Icons.search, color: AppColors.grey, size: 24.sp),
               suffixIcon: value.text.isNotEmpty

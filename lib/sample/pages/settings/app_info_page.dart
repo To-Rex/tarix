@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../controllers/api_controller.dart';
 import '../../../controllers/get_controller.dart';
@@ -68,13 +67,13 @@ class AppInfoPage extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
         surfaceTintColor: Colors.white,
-        title: Obx(() => Text(getController.appInfoModel.value.data?.title ?? 'AppInfo')),
+        title: Obx(() => Text(getController.appInfoModel.value.data?.title ?? 'AppInfo'.tr)),
         centerTitle: true,
       ),
       body: Obx(() {
         final appInfo = getController.appInfoModel.value;
         if (appInfo.data?.content == null) {
-          return const Center(child: Text('No content available'));
+          return Center(child: Text('No content available'.tr));
         }
         return SingleChildScrollView(
           child: Padding(

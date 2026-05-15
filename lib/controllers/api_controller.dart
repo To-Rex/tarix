@@ -62,9 +62,9 @@ class ApiController extends GetxController {
           print('Downloading: ${(received / total * 100).toStringAsFixed(0)}%');
         }
       });
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Fayl yuklab olindi: $savePath')),);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Fayl yuklab olindi'.tr + ': $savePath')),);
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Yuklashda xatolik yuz berdi: $e')),);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Yuklashda xatolik yuz berdi'.tr + ': $e')),);
     }
   }
 
@@ -80,7 +80,7 @@ class ApiController extends GetxController {
         _getController.changeAppInfoModel(AppInfoModel.fromJson(data));
       } else {
         print('=====================================================Xa otam nima bo`lyapti');
-        Get.snackbar('Xatolik', 'Email yoki parol xato', snackPosition: SnackPosition.BOTTOM);
+        Get.snackbar('Xatolik'.tr, 'Email yoki parol xato'.tr, snackPosition: SnackPosition.BOTTOM);
       }
     } catch (e) {
       print(e);
@@ -107,7 +107,7 @@ class ApiController extends GetxController {
         getMe();
       } else {
         print('=====================================================Xa otam nima bo`lyapti');
-        Get.snackbar('Xatolik', 'Email yoki parol xato', snackPosition: SnackPosition.BOTTOM);
+        Get.snackbar('Xatolik'.tr, 'Email yoki parol xato'.tr, snackPosition: SnackPosition.BOTTOM);
       }
     } catch (e) {
       print(e);
@@ -137,7 +137,7 @@ class ApiController extends GetxController {
         getMe();
       } else {
         print('=====================================================Xa otam nima bo`lyapti');
-        Get.snackbar('Xatolik', 'Email yoki parol xato', snackPosition: SnackPosition.BOTTOM);
+        Get.snackbar('Xatolik'.tr, 'Email yoki parol xato'.tr, snackPosition: SnackPosition.BOTTOM);
       }
     } catch (e) {
       print(e);
@@ -199,7 +199,7 @@ class ApiController extends GetxController {
         _getController.changeSubjectModel(SubjectModel.fromJson(data));
       } else {
         print('=====================================================Xa otam nima bo`lyapti');
-        Get.snackbar('Xatolik', 'Email yoki parol xato', snackPosition: SnackPosition.BOTTOM);
+        Get.snackbar('Xatolik'.tr, 'Email yoki parol xato'.tr, snackPosition: SnackPosition.BOTTOM);
       }
     } catch (e) {
       print(e);
@@ -217,7 +217,7 @@ class ApiController extends GetxController {
         _getController.changeSubjectCatModel(SubjectModel.fromJson(data));
       } else {
         print('=====================================================Xa otam nima bo`lyapti');
-        Get.snackbar('Xatolik', 'Email yoki parol xato', snackPosition: SnackPosition.BOTTOM);
+        Get.snackbar('Xatolik'.tr, 'Email yoki parol xato'.tr, snackPosition: SnackPosition.BOTTOM);
       }
     } catch (e) {
       print(e);
@@ -240,7 +240,7 @@ class ApiController extends GetxController {
         }
       } else {
         print('=====================================================Xa otam nima bo`lyapti');
-        Get.snackbar('Xatolik', 'Email yoki parol xato', snackPosition: SnackPosition.BOTTOM);
+        Get.snackbar('Xatolik'.tr, 'Email yoki parol xato'.tr, snackPosition: SnackPosition.BOTTOM);
       }
     } catch (e) {
       print(e);
@@ -261,7 +261,7 @@ class ApiController extends GetxController {
         _getController.changePresentationModel(PresentationModel.fromJson(data));
       } else {
         print('=====================================================Xa otam nima bo`lyapti');
-        Get.snackbar('Xatolik', 'Email yoki parol xato', snackPosition: SnackPosition.BOTTOM);
+        Get.snackbar('Xatolik'.tr, 'Email yoki parol xato'.tr, snackPosition: SnackPosition.BOTTOM);
       }
     } catch (e) {
       print(e);
@@ -303,7 +303,7 @@ class ApiController extends GetxController {
         }
       } else {
         print('=====================================================Xa otam nima bo`lyapti');
-        Get.snackbar('Xatolik', 'Email yoki parol xato', snackPosition: SnackPosition.BOTTOM);
+        Get.snackbar('Xatolik'.tr, 'Email yoki parol xato'.tr, snackPosition: SnackPosition.BOTTOM);
       }
       _getController.isLoadingMore.value = false;
     } catch (e) {
@@ -328,7 +328,7 @@ class ApiController extends GetxController {
         _getController.changeTestListModel(TestListModel.fromJson(data));
       } else {
         print('=====================================================Xa otam nima bo`lyapti');
-        Get.snackbar('Xatolik', 'Email yoki parol xato', snackPosition: SnackPosition.BOTTOM);
+        Get.snackbar('Xatolik'.tr, 'Email yoki parol xato'.tr, snackPosition: SnackPosition.BOTTOM);
       }
     } catch (e) {
       print(e);
@@ -353,7 +353,7 @@ class ApiController extends GetxController {
         _getController.changeQuestions(questions);
       } else {
         print('=====================================================Xa otam nima bo`lyapti');
-        Get.snackbar('Xatolik', 'Test ma\'lumotlarini yuklashda xatolik', snackPosition: SnackPosition.BOTTOM);
+        Get.snackbar('Xatolik'.tr, 'Test ma\'lumotlarini yuklashda xatolik'.tr, snackPosition: SnackPosition.BOTTOM);
       }
     } catch (e) {
       print(e);
@@ -399,7 +399,7 @@ class ApiController extends GetxController {
       else {
         print(
             '=====================================================Xa otam nima bo`lyapti');
-        Get.snackbar('Xatolik', 'Email yoki parol xato',
+        Get.snackbar('Xatolik'.tr, 'Email yoki parol xato'.tr,
             snackPosition: SnackPosition.BOTTOM);
       }
     } catch (e) {

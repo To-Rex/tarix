@@ -373,7 +373,7 @@ class InstrumentComponents {
                             } catch (e) {
                               print("❌ URL ochishda xatolik: $e");
                               // Foydalanuvchiga xabar ko'rsating, masalan:
-                              shoeToast('Xatolik', 'To\'lov sahifasini ochib bo\'lmadi. Brauzerni tekshiring.', true, 3);
+                              shoeToast('Xatolik'.tr, 'To\'lov sahifasini ochib bo\'lmadi. Brauzerni tekshiring.'.tr, true, 3);
                             }
                           }
                         ),
