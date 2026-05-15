@@ -15,6 +15,7 @@ import '../models/presentation_model.dart';
 import '../models/question_model.dart';
 import '../models/quiz_model.dart';
 import '../models/subject_model.dart';
+import '../models/test_answer_model.dart';
 import '../models/test_list_model.dart';
 import '../sample/pages/error_page.dart';
 import '../sample/sample_page.dart';
@@ -410,6 +411,26 @@ class ApiController extends GetxController {
       }
     } catch (e) {
       print(e);
+    }
+  }
+
+  Future<void> getTestAnswerList() async {
+    try {
+      final response = await http.get(
+        Uri.parse('$baseUrl/mobile/test/answer/list'),
+        headers: headersBearer(),
+      );
+      debugPrint(response.body);
+      debugPrint(response.statusCode.toString());
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final data = jsonDecode(response.body);
+        debugPrint(data.toString());
+        _getController.changeTestAnswerListModel(TestAnswerListModel.fromJson(data));
+      } else {
+        print('Test answer list error: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Test answer list exception: $e');
     }
   }
 }

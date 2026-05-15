@@ -14,6 +14,7 @@ import '../models/presentation_model.dart';
 import '../models/question_model.dart';
 import '../models/quiz_model.dart';
 import '../models/subject_model.dart';
+import '../models/test_answer_model.dart';
 import '../models/test_list_model.dart';
 import '../sample/auth/login_page.dart';
 import '../sample/pages/home/test_result_page.dart';
@@ -67,6 +68,7 @@ class GetController extends GetxController {
   var appInfoModel = AppInfoModel().obs;
   var paymentHistory = PaymentHistory().obs;
   var testListModel = TestListModel().obs;
+  var testAnswerListModel = TestAnswerListModel().obs;
 
   //change Models
   void changeMeModel(MeModel model) => meModel.value = model;
@@ -78,7 +80,7 @@ class GetController extends GetxController {
   void changeAppInfoModel(AppInfoModel model) => appInfoModel.value = model;
   void changePaymentModel(PaymentHistory model) => paymentHistory.value = model;
   void changeTestListModel(TestListModel model) => testListModel.value = model;
-
+  void changeTestAnswerListModel(TestAnswerListModel model) => testAnswerListModel.value = model;
 
   void appendQuizData(QuizModel model) {
     if (quizModel.value.data?.data == null) {
