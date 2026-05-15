@@ -21,6 +21,7 @@ class QuestionInfoPage extends StatelessWidget {
         title: TextSmall(text: 'Test natijalari', color: AppColors.black, fontSize: 20.sp, fontWeight: FontWeight.w500),
         centerTitle: true,
         backgroundColor: AppColors.white,
+        surfaceTintColor: AppColors.white,
         elevation: 0,
       ),
       body: Obx(() {
