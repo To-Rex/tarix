@@ -17,6 +17,7 @@ import '../models/subject_model.dart';
 import '../models/test_list_model.dart';
 import '../sample/auth/login_page.dart';
 import '../sample/pages/home/test_result_page.dart';
+import 'api_controller.dart';
 
 class GetController extends GetxController {
   var height = 0.0.obs;
@@ -37,6 +38,8 @@ class GetController extends GetxController {
   int seconds = 3551; // 59 daqiqa 11 sekund
   Timer? _timer;
   RxBool isTestLoading = false.obs;
+  String testId = '';
+  String testTitle = '';
 
   final ScrollController  scrollController = ScrollController();
   final ScrollController  scrollDetailController = ScrollController();
@@ -109,7 +112,7 @@ class GetController extends GetxController {
     super.onInit();
   }
 
-  void resetTest({int minutes = 59}) {
+  void resetTest({int minutes = 59, String sId = '', String title = ''}) {
     _timer?.cancel();
     _timer = null;
     questions.clear();
@@ -118,6 +121,8 @@ class GetController extends GetxController {
     seconds = minutes * 60;
     timerText.value = '${minutes.toString().padLeft(2, '0')}:00';
     isTestLoading.value = false;
+    testId = sId;
+    testTitle = title;
   }
 
   void changeQuestions(List<QuestionModel> newQuestions) {
@@ -137,7 +142,7 @@ class GetController extends GetxController {
       timerText.value = '${minutes.toString().padLeft(2, '0')}:${secs.toString().padLeft(2, '0')}';
       if (seconds == 0) {
         timer.cancel();
-        finishTest();
+        finishTest(sId: testId, title: testTitle);
       }
     });
   }
@@ -184,20 +189,28 @@ class GetController extends GetxController {
     }
   }
 
-  void finishTest({String title = ''}) {
+  Future<void> finishTest({String title = '', String sId = ''}) async {
     _timer?.cancel();
     int correctCount = 0;
+    final answers = <Map<String, dynamic>>[];
     for (int i = 0; i < questions.length; i++) {
       final selected = selectedAnswers[i];
-      if (selected != null) {
-        final correctOption = questions[i].options.where((o) => o.isCorrect).toList();
-        if (correctOption.isNotEmpty && correctOption.first.value == selected) {
-          correctCount++;
-        }
-      }
+      final correctOption = questions[i].options.where((o) => o.isCorrect).toList();
+      final isCorrect = selected != null && correctOption.isNotEmpty && correctOption.first.value == selected;
+      if (isCorrect) correctCount++;
+      final selectedOption = questions[i].options.where((o) => o.value == selected).toList();
+      answers.add({
+        'question': questions[i].id,
+        'answer': selectedOption.isNotEmpty ? selectedOption.first.text : '',
+        'correct': isCorrect,
+      });
+    }
+    final id = sId.isNotEmpty ? sId : testId;
+    if (id.isNotEmpty) {
+      await ApiController().finishTestApi(id, answers);
     }
     Get.to(() => TestResultPage(
-      title: title,
+      title: title.isNotEmpty ? title : testTitle,
       questions: questions.toList(),
       selectedAnswers: Map.from(selectedAnswers),
       correctCount: correctCount,

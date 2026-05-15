@@ -19,14 +19,16 @@ class QuestionModel {
 }
 
 class OptionModel {
+  final String id;
   final String text;
   final String value;
   final bool isCorrect;
 
-  OptionModel({required this.text, required this.value, required this.isCorrect});
+  OptionModel({this.id = '', required this.text, required this.value, required this.isCorrect});
 
   factory OptionModel.fromApiJson(Map<String, dynamic> json, int index) {
     return OptionModel(
+      id: json['_id'] ?? '',
       text: json['answer'] ?? '',
       value: String.fromCharCode(65 + index),
       isCorrect: json['correct'] ?? false,

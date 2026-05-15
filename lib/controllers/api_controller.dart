@@ -361,6 +361,35 @@ class ApiController extends GetxController {
     }
   }
 
+  Future<void> finishTestApi(String testId, List<Map<String, dynamic>> answers) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$baseUrl/mobile/test/$testId/finish'),
+        headers: headersBearer(),
+        body: jsonEncode({'answers': answers}),
+      );
+      print('--------------------------------------------------------------------------------------------------------------------------------');
+      print('--------------------------------------------------------------------------------------------------------------------------------');
+      print('--------------------------------------------------------------------------------------------------------------------------------');
+      debugPrint(response.body);
+      print('--------------------------------------------------------------------------------------------------------------------------------');
+      print('--------------------------------------------------------------------------------------------------------------------------------');
+      print('--------------------------------------------------------------------------------------------------------------------------------');
+
+      debugPrint(response.statusCode.toString());
+      print('--------------------------------------------------------------------------------------------------------------------------------');
+
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        debugPrint('Test finish API success');
+      } else {
+        print('Test finish API error: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Test finish API exception: $e');
+    }
+  }
+
   //mobile/payment/list
   Future<void> getPaymentHistory() async {
     try {

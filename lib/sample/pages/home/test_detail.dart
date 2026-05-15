@@ -25,7 +25,7 @@ class _TestDetailState extends State<TestDetail> {
   void initState() {
     super.initState();
     _controller = Get.put(GetController());
-    _controller.resetTest(minutes: widget.minutes);
+    _controller.resetTest(minutes: widget.minutes, sId: widget.sId, title: widget.title);
     ApiController().startTest(widget.sId);
   }
 
@@ -96,7 +96,7 @@ class _TestDetailState extends State<TestDetail> {
                         padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 13.h),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(12.r))),
                       ),
-                      onPressed: () => _controller.finishTest(title: widget.title),
+                      onPressed: () => _controller.finishTest(title: widget.title, sId: widget.sId),
                       child: TextSmall(
                         text: 'Yakunlash',
                         color: AppColors.white,
