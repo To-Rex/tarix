@@ -14,10 +14,10 @@ import '../sample/pages/home/notification_page.dart';
 class HomePage extends StatelessWidget {
   HomePage({super.key});
   final GetController _getController = Get.put(GetController());
+  final ScrollController scrollHomeController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
-    final ScrollController scrollHomeController = ScrollController();
 
     final double screenWidth = ScreenUtil().screenWidth;
     final bool isTablet = screenWidth > 600;
@@ -34,6 +34,9 @@ class HomePage extends StatelessWidget {
       onRefresh: () async {
         _getController.clearSubjectModel();
         await ApiController().getSubject();
+        if (scrollHomeController.hasClients) {
+          scrollHomeController.jumpTo(0);
+        }
       },
       child: Obx(() => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
