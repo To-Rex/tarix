@@ -115,40 +115,44 @@ class _TestDetailState extends State<TestDetail> {
                   padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      // Question Content
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          TextSmall(
-                            text: '№${_controller.currentQuestionIndex.value + 1}',
-                            color: AppColors.grey4,
-                            fontSize: 24.sp,
-                            fontWeight: FontWeight.w500,
+                      // Question Content - scrollable
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              TextSmall(
+                                text: '№${_controller.currentQuestionIndex.value + 1}',
+                                color: AppColors.grey4,
+                                fontSize: 24.sp,
+                                fontWeight: FontWeight.w500,
+                              ),
+                              SizedBox(height: 10.h),
+                              TextSmall(
+                                text: _controller.questions[_controller.currentQuestionIndex.value].text,
+                                color: AppColors.black,
+                                maxLines: 10000,
+                                fontSize: 24.sp,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              SizedBox(height: 10.h),
+                              Divider(thickness: 1.w, color: AppColors.grey),
+                              // Options
+                              ..._controller.questions[_controller.currentQuestionIndex.value].options.map((option) {
+                                return RadioOption(
+                                  text: option.text,
+                                  value: option.value,
+                                  groupValue: _controller.selectedAnswers[_controller.currentQuestionIndex.value] ?? '',
+                                  onChanged: (value) => _controller.selectAnswer(value!),
+                                );
+                              }).toList(),
+                            ],
                           ),
-                          SizedBox(height: 10.h),
-                          TextSmall(
-                            text: _controller.questions[_controller.currentQuestionIndex.value].text,
-                            color: AppColors.black,
-                            maxLines: 10000,
-                            fontSize: 24.sp,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          SizedBox(height: 10.h),
-                          Divider(thickness: 1.w, color: AppColors.grey),
-                          // Options
-                          ..._controller.questions[_controller.currentQuestionIndex.value].options.map((option) {
-                            return RadioOption(
-                              text: option.text,
-                              value: option.value,
-                              groupValue: _controller.selectedAnswers[_controller.currentQuestionIndex.value] ?? '',
-                              onChanged: (value) => _controller.selectAnswer(value!),
-                            );
-                          }).toList(),
-                        ],
+                        ),
                       ),
                       // Navigation Buttons
+                      SizedBox(height: 10.h),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
