@@ -112,6 +112,7 @@ class GetController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    syncPendingTestResults();
   }
 
   void resetTest({int minutes = 59, String sId = '', String title = ''}) {
@@ -208,17 +209,52 @@ class GetController extends GetxController {
       });
     }
     final id = sId.isNotEmpty ? sId : testId;
+    final resultTitle = title.isNotEmpty ? title : testTitle;
     if (id.isNotEmpty) {
-      await ApiController().finishTestApi(id, answers);
+      savePendingTestResult(id, resultTitle, List.from(answers));
+      final success = await ApiController().finishTestApi(id, answers);
+      if (success) {
+        removePendingTestResult(id);
+      }
     }
     Get.off(() => TestResultPage(
-      title: title.isNotEmpty ? title : testTitle,
+      title: resultTitle,
       questions: questions.toList(),
       selectedAnswers: Map.from(selectedAnswers),
       correctCount: correctCount,
       totalCount: questions.length,
       elapsedTime: timerText.value,
     ));
+  }
+
+  void savePendingTestResult(String testId, String title, List<Map<String, dynamic>> answers) {
+    final pending = List<Map<String, dynamic>>.from(box.read('pending_test_results') ?? []);
+    pending.add({
+      'testId': testId,
+      'title': title,
+      'answers': answers,
+      'timestamp': DateTime.now().millisecondsSinceEpoch,
+    });
+    box.write('pending_test_results', pending);
+  }
+
+  void removePendingTestResult(String testId) {
+    final pending = List<Map<String, dynamic>>.from(box.read('pending_test_results') ?? []);
+    pending.removeWhere((r) => r['testId'] == testId);
+    box.write('pending_test_results', pending);
+  }
+
+  Future<void> syncPendingTestResults() async {
+    final pending = List<Map<String, dynamic>>.from(box.read('pending_test_results') ?? []);
+    if (pending.isEmpty) return;
+    final remaining = <Map<String, dynamic>>[];
+    for (final result in pending) {
+      final success = await ApiController().finishTestApi(result['testId'], List<Map<String, dynamic>>.from(result['answers']));
+      if (!success) {
+        remaining.add(result);
+      }
+    }
+    box.write('pending_test_results', remaining);
   }
 
   @override

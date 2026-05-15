@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import '../../../companents/filds/text_small.dart';
+import '../../../companents/refresh_component.dart';
 import '../../../controllers/api_controller.dart';
 import '../../../controllers/get_controller.dart';
 import '../../../resource/app_colors.dart';
@@ -24,39 +26,63 @@ class QuestionInfoPage extends StatelessWidget {
         surfaceTintColor: AppColors.white,
         elevation: 0,
       ),
-      body: Obx(() {
-        final data = _getController.testAnswerListModel.value.data;
-        if (data == null || data.isEmpty) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.info_outline, size: 80.sp, color: AppColors.grey3),
-                SizedBox(height: 20.h),
-                TextSmall(text: "Hozircha ma'lumotlar mavjud emas", color: AppColors.black, fontSize: 18.sp, fontWeight: FontWeight.w600, textAlign: TextAlign.center),
-                SizedBox(height: 10.h),
-                TextSmall(text: "Iltimos, keyinroq qayta urinib ko'ring yoki ma'lumotlarni yangilang.", color: AppColors.grey3, fontSize: 14.sp, fontWeight: FontWeight.w400, textAlign: TextAlign.center, maxLines: 2),
-                SizedBox(height: 40.h),
-              ],
-            ),
+      body: RefreshComponent(
+        color: AppColors.black,
+        scrollController: _getController.scrollController,
+        onRefresh: () async {
+          ApiController().getTestAnswerList();
+        },
+        child: Obx(() {
+          final data = _getController.testAnswerListModel.value.data;
+          if (data == null) {
+            return _buildSkeleton();
+          }
+          if (data.isEmpty) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.info_outline, size: 80.sp, color: AppColors.grey3),
+                  SizedBox(height: 20.h),
+                  TextSmall(text: "Hozircha ma'lumotlar mavjud emas", color: AppColors.black, fontSize: 18.sp, fontWeight: FontWeight.w600, textAlign: TextAlign.center),
+                  SizedBox(height: 10.h),
+                  TextSmall(text: "Iltimos, keyinroq qayta urinib ko'ring yoki ma'lumotlarni yangilang.", color: AppColors.grey3, fontSize: 14.sp, fontWeight: FontWeight.w400, textAlign: TextAlign.center, maxLines: 2),
+                  SizedBox(height: 40.h),
+                ],
+              ),
+            );
+          }
+          return ListView.builder(
+            itemCount: data.length,
+            shrinkWrap: true,
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              final item = data[index];
+              return _buildResultCard(item);
+            },
           );
-        }
-        return ListView.builder(
-          itemCount: data.length,
-          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-          itemBuilder: (context, index) {
-            final item = data[index];
-            return _buildResultCard(item);
-          },
-        );
-      }),
+        }),
+      ),
+    );
+  }
+
+  Widget _buildSkeleton() {
+    return Skeletonizer(
+      child: ListView.builder(
+        itemCount: 6,
+        shrinkWrap: true,
+        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+        physics: const NeverScrollableScrollPhysics(),
+        itemBuilder: (context, index) => _buildResultCard(null),
+      ),
     );
   }
 
   Widget _buildResultCard(dynamic item) {
-    final test = item.test;
-    final ball = item.ball ?? 0;
-    final ballPercent = item.ballPercent ?? 0.0;
+    final test = item?.test;
+    final ball = item?.ball ?? 0;
+    final ballPercent = item?.ballPercent ?? 0.0;
 
     Color percentColor;
     if (ballPercent >= 80) {
