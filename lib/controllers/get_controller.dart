@@ -209,7 +209,7 @@ class GetController extends GetxController {
     if (id.isNotEmpty) {
       await ApiController().finishTestApi(id, answers);
     }
-    Get.to(() => TestResultPage(
+    Get.off(() => TestResultPage(
       title: title.isNotEmpty ? title : testTitle,
       questions: questions.toList(),
       selectedAnswers: Map.from(selectedAnswers),
