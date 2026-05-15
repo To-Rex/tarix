@@ -179,27 +179,32 @@ class _TestDetailState extends State<TestDetail> {
                               ),
                             ),
                           ),
-                          // Keyingisi Button
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.primaryColor,
-                              padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(12.r))),
-                            ),
-                            onPressed: _controller.nextQuestion,
-                            child: Row(
-                              children: [
-                                TextSmall(
-                                  text: 'Keyingisi',
-                                  color: AppColors.white,
-                                  fontSize: 18.sp,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                                SizedBox(width: 5.sp),
-                                Icon(Icons.arrow_forward_ios, color: AppColors.white, size: 18.sp),
-                              ],
-                            ),
-                          ),
+                          // Keyingisi / Yakunlash Button
+                          Obx(() {
+                            final isLastQuestion = _controller.currentQuestionIndex.value == _controller.questions.length - 1;
+                            return ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.primaryColor,
+                                padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(12.r))),
+                              ),
+                              onPressed: isLastQuestion ? () => _controller.finishTest(title: widget.title, sId: widget.sId) : _controller.nextQuestion,
+                              child: Row(
+                                children: [
+                                  TextSmall(
+                                    text: isLastQuestion ? 'Yakunlash' : 'Keyingisi',
+                                    color: AppColors.white,
+                                    fontSize: 18.sp,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  if (!isLastQuestion) ...[
+                                    SizedBox(width: 5.sp),
+                                    Icon(Icons.arrow_forward_ios, color: AppColors.white, size: 18.sp),
+                                  ],
+                                ],
+                              ),
+                            );
+                          }),
                         ],
                       ),
                     ],
