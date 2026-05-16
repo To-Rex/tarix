@@ -83,6 +83,10 @@ class QuestionInfoPage extends StatelessWidget {
     final test = item?.test;
     final ball = item?.ball ?? 0;
     final ballPercent = item?.ballPercent ?? 0.0;
+    final duration = item?.duration ?? '';
+    final questionsCount = item?.questionsCount ?? 0;
+    final answersCount = item?.answersCount ?? 0;
+    final createdAt = item?.createdAt ?? '';
 
     Color percentColor;
     if (ballPercent >= 80) {
@@ -91,6 +95,14 @@ class QuestionInfoPage extends StatelessWidget {
       percentColor = AppColors.primaryColor;
     } else {
       percentColor = AppColors.red;
+    }
+
+    String formattedDate = '';
+    if (createdAt.isNotEmpty) {
+      final date = DateTime.tryParse(createdAt);
+      if (date != null) {
+        formattedDate = '${date.day.toString().padLeft(2, '0')}.${date.month.toString().padLeft(2, '0')}.${date.year}';
+      }
     }
 
     return Container(
@@ -108,16 +120,30 @@ class QuestionInfoPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 TextSmall(text: test?.title ?? '', color: AppColors.black, fontSize: 18.sp, fontWeight: FontWeight.bold),
-                SizedBox(height: 6.h),
+                SizedBox(height: 8.h),
                 Row(
                   children: [
-                    Icon(Icons.timer, color: AppColors.grey3, size: 16.sp),
+                    Icon(Icons.timer_outlined, color: AppColors.grey3, size: 16.sp),
                     SizedBox(width: 4.w),
-                    TextSmall(text: '${test?.minutes ?? 0} ${'daqiqa'.tr}', color: AppColors.grey3, fontSize: 14.sp, fontWeight: FontWeight.w400),
+                    TextSmall(text: duration, color: AppColors.grey3, fontSize: 14.sp, fontWeight: FontWeight.w400),
                     SizedBox(width: 16.w),
                     Icon(Icons.quiz_outlined, color: AppColors.grey3, size: 16.sp),
                     SizedBox(width: 4.w),
-                    TextSmall(text: '$ball ${'ball'.tr}', color: AppColors.grey3, fontSize: 14.sp, fontWeight: FontWeight.w400),
+                    TextSmall(text: '$answersCount/$questionsCount', color: AppColors.grey3, fontSize: 14.sp, fontWeight: FontWeight.w400),
+                  ],
+                ),
+                SizedBox(height: 4.h),
+                Row(
+                  children: [
+                    Icon(Icons.star_outline, color: AppColors.grey3, size: 16.sp),
+                    SizedBox(width: 4.w),
+                    TextSmall(text: '$ball ball', color: AppColors.grey3, fontSize: 14.sp, fontWeight: FontWeight.w400),
+                    if (formattedDate.isNotEmpty) ...[
+                      SizedBox(width: 16.w),
+                      Icon(Icons.calendar_today_outlined, color: AppColors.grey3, size: 14.sp),
+                      SizedBox(width: 4.w),
+                      TextSmall(text: formattedDate, color: AppColors.grey3, fontSize: 14.sp, fontWeight: FontWeight.w400),
+                    ],
                   ],
                 ),
               ],
