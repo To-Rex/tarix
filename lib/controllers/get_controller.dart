@@ -37,6 +37,7 @@ class GetController extends GetxController {
   // Taymer
   final timerText = '59:11'.obs;
   int seconds = 3551; // 59 daqiqa 11 sekund
+  int initialSeconds = 0;
   Timer? _timer;
   RxBool isTestLoading = false.obs;
   String testId = '';
@@ -122,6 +123,7 @@ class GetController extends GetxController {
     selectedAnswers.clear();
     currentQuestionIndex.value = 0;
     seconds = minutes * 60;
+    initialSeconds = seconds;
     timerText.value = '${minutes.toString().padLeft(2, '0')}:00';
     isTestLoading.value = false;
     testId = sId;
@@ -194,6 +196,10 @@ class GetController extends GetxController {
 
   Future<void> finishTest({String title = '', String sId = ''}) async {
     _timer?.cancel();
+    final elapsedSeconds = initialSeconds - seconds;
+    final elapsedMinutes = elapsedSeconds ~/ 60;
+    final elapsedSecs = elapsedSeconds % 60;
+    final duration = '${elapsedMinutes.toString().padLeft(2, '0')}:${elapsedSecs.toString().padLeft(2, '0')}';
     int correctCount = 0;
     final answers = <Map<String, dynamic>>[];
     for (int i = 0; i < questions.length; i++) {
@@ -211,8 +217,8 @@ class GetController extends GetxController {
     final id = sId.isNotEmpty ? sId : testId;
     final resultTitle = title.isNotEmpty ? title : testTitle;
     if (id.isNotEmpty) {
-      savePendingTestResult(id, resultTitle, List.from(answers));
-      final success = await ApiController().finishTestApi(id, answers);
+      savePendingTestResult(id, resultTitle, List.from(answers), duration);
+      final success = await ApiController().finishTestApi(id, answers, duration);
       if (success) {
         removePendingTestResult(id);
       }
@@ -223,16 +229,17 @@ class GetController extends GetxController {
       selectedAnswers: Map.from(selectedAnswers),
       correctCount: correctCount,
       totalCount: questions.length,
-      elapsedTime: timerText.value,
+      elapsedTime: duration,
     ));
   }
 
-  void savePendingTestResult(String testId, String title, List<Map<String, dynamic>> answers) {
+  void savePendingTestResult(String testId, String title, List<Map<String, dynamic>> answers, String duration) {
     final pending = List<Map<String, dynamic>>.from(box.read('pending_test_results') ?? []);
     pending.add({
       'testId': testId,
       'title': title,
       'answers': answers,
+      'duration': duration,
       'timestamp': DateTime.now().millisecondsSinceEpoch,
     });
     box.write('pending_test_results', pending);
@@ -249,7 +256,7 @@ class GetController extends GetxController {
     if (pending.isEmpty) return;
     final remaining = <Map<String, dynamic>>[];
     for (final result in pending) {
-      final success = await ApiController().finishTestApi(result['testId'], List<Map<String, dynamic>>.from(result['answers']));
+      final success = await ApiController().finishTestApi(result['testId'], List<Map<String, dynamic>>.from(result['answers']), result['duration'] ?? '');
       if (!success) {
         remaining.add(result);
       }

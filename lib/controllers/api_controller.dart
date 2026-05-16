@@ -362,12 +362,12 @@ class ApiController extends GetxController {
     }
   }
 
-  Future<bool> finishTestApi(String testId, List<Map<String, dynamic>> answers) async {
+  Future<bool> finishTestApi(String testId, List<Map<String, dynamic>> answers, String duration) async {
     try {
       final response = await http.post(
         Uri.parse('$baseUrl/mobile/test/$testId/finish'),
         headers: headersBearer(),
-        body: jsonEncode({'answers': answers}),
+        body: jsonEncode({'answers': answers, 'duration': duration}),
       );
       debugPrint(response.body);
       debugPrint(response.statusCode.toString());
