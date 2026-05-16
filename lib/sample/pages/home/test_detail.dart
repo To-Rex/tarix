@@ -70,26 +70,30 @@ class _TestDetailState extends State<TestDetail> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
-                      height: 55.w,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12.r),
-                        border: Border.all(color: AppColors.grey, width: 1.w),
-                      ),
-                      child: Row(
-                        children: [
-                          Icon(Icons.timer, color: AppColors.primaryColor, size: 25.sp),
-                          SizedBox(width: 5.w),
-                          TextSmall(
-                            text: _controller.timerText.value,
-                            color: AppColors.black,
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ],
-                      ),
-                    ),
+                    Obx(() {
+                      final isUrgent = _controller.seconds <= 60;
+                      final timerColor = isUrgent ? AppColors.red : AppColors.primaryColor;
+                      return Container(
+                        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
+                        height: 55.w,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12.r),
+                          border: Border.all(color: isUrgent ? AppColors.red : AppColors.grey, width: 1.w),
+                        ),
+                        child: Row(
+                          children: [
+                            Icon(Icons.timer, color: timerColor, size: 25.sp),
+                            SizedBox(width: 5.w),
+                            TextSmall(
+                              text: _controller.timerText.value,
+                              color: isUrgent ? AppColors.red : AppColors.black,
+                              fontSize: 18.sp,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ],
+                        ),
+                      );
+                    }),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primaryColor,
