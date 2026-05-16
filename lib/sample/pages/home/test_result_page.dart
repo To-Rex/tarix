@@ -197,9 +197,12 @@ class TestResultPage extends StatelessWidget {
                 } else if (isSelected && !isRight) {
                   bgColor = AppColors.red.withValues(alpha: 0.1);
                   textColor = AppColors.red;
-                } else if (!isSelected && isRight) {
+                } else if (!isSelected && isRight && selected != null) {
                   bgColor = AppColors.lightGreen.withValues(alpha: 0.08);
                   textColor = AppColors.lightGreen2;
+                }
+                if (!isSelected && isRight && selected == null) {
+                  return const SizedBox.shrink();
                 }
                 return Container(
                   margin: EdgeInsets.only(bottom: 4.h),
