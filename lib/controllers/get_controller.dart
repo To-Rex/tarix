@@ -204,8 +204,9 @@ class GetController extends GetxController {
     final answers = <Map<String, dynamic>>[];
     for (int i = 0; i < questions.length; i++) {
       final selected = selectedAnswers[i];
+      if (selected == null) continue;
       final correctOption = questions[i].options.where((o) => o.isCorrect).toList();
-      final isCorrect = selected != null && correctOption.isNotEmpty && correctOption.first.value == selected;
+      final isCorrect = correctOption.isNotEmpty && correctOption.first.value == selected;
       if (isCorrect) correctCount++;
       final selectedOption = questions[i].options.where((o) => o.value == selected).toList();
       answers.add({
